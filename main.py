@@ -39,6 +39,7 @@ def main():
         print(f"Investment Balance: SAR {details['investment_balance']:,.2f}")
         print_separator()
         print()
+    print()
 
     # Print expense summary
     expense_summary = project.get_expense_summary()
@@ -50,6 +51,7 @@ def main():
         print(f"Status: {details['status'].value}")
         print_separator()
         print()
+    print()
 
     # Print project summary
     print(project)

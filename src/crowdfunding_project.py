@@ -182,7 +182,7 @@ class CrowdfundingProject:
         """
         return (
             f"Crowdfunding Project: {self.name}\n"
-            f"Target Amount: SAR{self.target_amount():,.2f}\n"
+            f"Target Amount: SAR {self.target_amount():,.2f}\n"
             f"Start Date: {self.start_date.date()}\n"
             f"End Date: {self.end_date.date()}\n"
             f"Total Investments Plan: SAR {self.total_investments():,.2f}\n"
