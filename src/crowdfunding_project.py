@@ -173,6 +173,28 @@ class CrowdfundingProject:
             }
         return expense_summary
 
+
+    def get_payment_summary(self) -> Dict[str, Dict[str, float]]:
+        """
+        Get the payments summary.
+
+        :return: A dictionary containing payment summary.
+                 Each key represents a payment number and its corresponding value is a dictionary
+                    containing the payment details.
+                    The payment details include the payment date, partner name, payment amount, and expense description.
+        :rtype: dict
+        """
+        return {
+            f"Payment #{i+1}": {
+                "date": payment.date.date(),
+                "partner": payment.partner.name,
+                "amount": payment.amount,
+                "expense": payment.expense.description,
+                "percentage": payment.amount / payment.expense.amount * 100
+            }
+            for i, payment in enumerate(self.payments)
+        }
+
     def __str__(self) -> str:
         """
         Generate a string representation of the CrowdfundingProject.

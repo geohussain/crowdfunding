@@ -30,7 +30,7 @@ def encapsulate_as_text_header(text, level=1):
     underline_char = '=' if level == 1 else '-'
     underline = underline_char * len(text)
 
-    print(f"{text}\n{underline}")
+    print(f"*{text}*\n{underline}")
 
 def main():
     # Create a new crowdfunding project
@@ -40,12 +40,12 @@ def main():
     land_price = project.add_expense("Land Price from Auction", 1885908, datetime(2024, 7, 22))
     price_increase = project.add_expense("Price Increase after Auction", 178102, datetime(2024, 7, 22))
     auction_fees = project.add_expense("Auction Agent Fees", 54221, datetime(2024, 7, 22))
-    vat = project.add_expense("VAT", 94295, datetime(2024, 7, 22))
+    vat = project.add_expense("VAT", 94295.40, datetime(2024, 7, 22))
     agent_fees = project.add_expense("Agent Fees", 52955, datetime(2024, 7, 22))
 
     # Add partners
     hussain_alsalim = project.add_partner("Hussain AlSalim", 1000000)
-    ali_alfaraj = project.add_partner("Ali AlFaraj", 500000)
+    ali_alfaraj = project.add_partner("Ali AlFaraj", 500000.40)
     saleh_alnasser = project.add_partner("Saleh AlNasser", 440000)
     ali_aldawood = project.add_partner("Ali AlDawood", 205481)
     mohammed_alhawaj = project.add_partner("Mohammed AlHawaj", 120000)
@@ -77,6 +77,18 @@ def main():
         print(f"Paid: SAR {details['paid']:,.2f}")
         print(f"Remaining: SAR {details['remaining']:,.2f}")
         print(f"Status: {details['status'].value}")
+        print_separator()
+    print()
+
+    # Print payment summary
+    encapsulate_as_text_header("Payments Summary")
+    payment_summary = project.get_payment_summary()
+    for description, details in payment_summary.items():
+        print(f"Payment: {description}")
+        print(f"Date: {details['date']}")
+        print(f"Partner: {details['partner']}")
+        print(f"Amount: SAR {details['amount']:,.2f}")
+        print(f"Expense: {details['expense']}" + f" ({details['percentage']:,.2f}%)")
         print_separator()
     print()
 
