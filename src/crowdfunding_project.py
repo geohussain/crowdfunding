@@ -106,7 +106,7 @@ class CrowdfundingProject:
 
     def project_balance(self) -> float:
         """Calculate the current balance of the project."""
-        return self.total_investments() + self.total_sales() - self.total_expenses()
+        return self.total_sales() - self.total_payments()
 
     def target_amount(self) -> float:
         """Calculate the target amount based on total expenses."""

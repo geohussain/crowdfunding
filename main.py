@@ -53,6 +53,9 @@ def main():
     # Add payments
     project.add_payment(52955, datetime(2024, 7, 22), hussain_alsalim, agent_fees)
     project.add_payment(94295.40, datetime(2024, 7, 23), ali_alfaraj, vat)
+    project.add_payment(947045, datetime(2024, 7, 24), hussain_alsalim, land_price)
+    project.add_payment(120000, datetime(2024, 7, 28), mohammed_alhawaj, land_price)
+    project.add_payment(205481, datetime(2024, 7, 28), ali_aldawood, land_price)
 
     # Add a sale
     # project.add_sale(1250000, datetime(2025, 6, 1), "Duplex 1 Sale")
