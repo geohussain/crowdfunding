@@ -2,36 +2,6 @@ from datetime import datetime
 from src.crowdfunding_project import CrowdfundingProject
 
 
-def print_separator(width=20, char='-'):
-    """Prints a separator line with a given width and character.
-
-    :param width: The width of the separator line (default is 50).
-    :param char: The character to use for the separator line (default is '=').
-    :return: None
-    """
-    print(char * width)
-
-
-def encapsulate_as_text_header(text, level=1):
-    """
-    :param text: A string representing the content of the text header.
-    :param level: An integer indicating the level of the header. Must be 1 or 2. Defaults to 1.
-    :return: None
-
-    Encapsulates the given text as a text header by printing it along with an underline that matches the length of the text. The underline character used depends on the level of the header.
-
-    Example usage:
-        encapsulate_as_text_header("Hello, World!")
-        encapsulate_as_text_header("Important Information", level=2)
-    """
-    if level < 1 or level > 2:
-        raise ValueError("Header level must be 1 or 2")
-
-    underline_char = '=' if level == 1 else '-'
-    underline = underline_char * len(text)
-
-    print(f"*{text}*\n{underline}")
-
 def main():
     # Create a new crowdfunding project
     project = CrowdfundingProject("Ghadeer Land", datetime(2024, 7, 22), datetime(2025, 7, 22))
@@ -61,43 +31,18 @@ def main():
     # project.add_sale(1250000, datetime(2025, 6, 1), "Duplex 1 Sale")
 
     # Print partner summary
-    encapsulate_as_text_header("Partners Summary")
-    partner_summary = project.get_partner_summary()
-    for name, details in partner_summary.items():
-        print(f"Partner: {name}")
-        print(f"Investment Plan: SAR {details['investment']:,.2f}")
-        print(f"Ownership Percentage: {details['ownership_percentage']:.2f}%")
-        print(f"Total Payments: SAR {details['total_payments']:,.2f}")
-        print(f"Investment Balance: SAR {details['investment_balance']:,.2f}")
-        print_separator()
-    print()
+    project.print_partner_summary()
 
     # Print expense summary
-    encapsulate_as_text_header("Expenses Summary")
-    expense_summary = project.get_expense_summary()
-    for description, details in expense_summary.items():
-        print(f"Expense: {description}")
-        print(f"Total: SAR {details['total']:,.2f}")
-        print(f"Paid: SAR {details['paid']:,.2f}")
-        print(f"Remaining: SAR {details['remaining']:,.2f}")
-        print(f"Status: {details['status'].value}")
-        print_separator()
-    print()
+    project.print_expense_summary()
 
     # Print payment summary
-    encapsulate_as_text_header("Payments Summary")
-    payment_summary = project.get_payment_summary()
-    for description, details in payment_summary.items():
-        print(f"Payment: {description}")
-        print(f"Date: {details['date']}")
-        print(f"Partner: {details['partner']}")
-        print(f"Amount: SAR {details['amount']:,.2f}")
-        print(f"Expense: {details['expense']}" + f" ({details['percentage']:,.2f}%)")
-        print_separator()
-    print()
+    project.print_payment_summary()
+
+    # Print sales summary
+    project.print_sale_summary()
 
     # Print project summary
-    encapsulate_as_text_header("Project Summary")
     print(project)
 
 

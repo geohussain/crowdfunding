@@ -6,6 +6,7 @@ from .partner import Partner
 from .payment import Payment
 from .sale import Sale
 from .payment_status import PaymentStatus
+from .helpers import separator, encapsulate_as_text_header
 
 
 @dataclass
@@ -195,6 +196,77 @@ class CrowdfundingProject:
             for i, payment in enumerate(self.payments)
         }
 
+    def get_sale_summary(self) -> Dict[str, Dict[str, float]]:
+        """
+        Generate a summary of all sales, including their total amounts and descriptions.
+
+        Returns:
+            Dict[str, Dict[str, float]]: A dictionary with sale descriptions as keys and their summary details as values.
+        """
+        return {
+            sale.description: {
+                "date": sale.date.date(),
+                "total": sale.amount
+            }
+            for sale in self.sales
+        }
+
+    def print_partner_summary(self):
+        print(encapsulate_as_text_header("Partners Summary"))
+        partner_summary = self.get_partner_summary()
+        for name, details in partner_summary.items():
+            print(f"Partner: {name}")
+            print(f"Investment Plan: SAR {details['investment']:,.2f}")
+            print(f"Ownership Percentage: {details['ownership_percentage']:.2f}%")
+            print(f"Total Payments: SAR {details['total_payments']:,.2f}")
+            print(f"Investment Balance: SAR {details['investment_balance']:,.2f}")
+            print(separator())
+        print()
+
+    def print_expense_summary(self):
+        print(encapsulate_as_text_header("Expenses Summary"))
+        expense_summary = self.get_expense_summary()
+        for description, details in expense_summary.items():
+            print(f"Expense: {description}")
+            print(f"Total: SAR {details['total']:,.2f}")
+            print(f"Paid: SAR {details['paid']:,.2f}")
+            print(f"Remaining: SAR {details['remaining']:,.2f}")
+            print(f"Status: {details['status'].value}")
+            print(separator())
+        print()
+
+    def print_payment_summary(self):
+        print(encapsulate_as_text_header("Payments Summary"))
+        payment_summary = self.get_payment_summary()
+        for description, details in payment_summary.items():
+            print(f"Payment: {description}")
+            print(f"Date: {details['date']}")
+            print(f"Partner: {details['partner']}")
+            print(f"Amount: SAR {details['amount']:,.2f}")
+            print(f"Expense: {details['expense']}" + f" ({details['percentage']:,.2f}%)")
+            print(separator())
+        print()
+
+    def print_sale_summary(self):
+        print(encapsulate_as_text_header("Sales Summary"))
+        sales_summary = self.get_sale_summary()
+        partner_summary = self.get_partner_summary()
+
+        for sale, details in sales_summary.items():
+            print(f"Sale: {sale}")
+            print(f"Date: {details['date']}")
+            print(f"Total: SAR {details['total']:,.2f}")
+            print(separator())
+            print()
+
+            for name, partner_details in partner_summary.items():
+                ownership_percentage = partner_details['ownership_percentage']
+                amount = details['total'] * ownership_percentage / 100
+                print(f"Partner: {name}")
+                print(f"Amount based on ownership percentage of {ownership_percentage:,.2f} % : SAR {amount:,.2f}")
+                print(separator())
+            print()
+
     def __str__(self) -> str:
         """
         Generate a string representation of the CrowdfundingProject.
@@ -203,6 +275,7 @@ class CrowdfundingProject:
             str: A formatted string containing key information about the project.
         """
         return (
+            encapsulate_as_text_header("Project Summary") + "\n"
             f"Crowdfunding Project: {self.name}\n"
             f"Target Amount: SAR {self.target_amount():,.2f}\n"
             f"Start Date: {self.start_date.date()}\n"
@@ -212,5 +285,6 @@ class CrowdfundingProject:
             f"Total Payments: SAR {self.total_payments():,.2f}\n"
             f"Total Sales: SAR {self.total_sales():,.2f}\n"
             f"Current Balance: SAR {self.project_balance():,.2f}\n"
+            f"Gains Percentage: {self.project_balance() / self.total_payments() * 100:,.2f} %\n"
             f"Remaining Total Expenses: SAR {self.total_expenses() - self.total_payments():,.2f}"
         )
