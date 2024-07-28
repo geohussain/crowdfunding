@@ -212,6 +212,11 @@ class CrowdfundingProject:
         }
 
     def print_partner_summary(self):
+        """
+        Print the summary of partners.
+
+        :return: None
+        """
         print(encapsulate_as_text_header("Partners Summary"))
         partner_summary = self.get_partner_summary()
         for name, details in partner_summary.items():
@@ -224,6 +229,11 @@ class CrowdfundingProject:
         print()
 
     def print_expense_summary(self):
+        """
+        Prints the summary of expenses.
+
+        :return: None
+        """
         print(encapsulate_as_text_header("Expenses Summary"))
         expense_summary = self.get_expense_summary()
         for description, details in expense_summary.items():
@@ -236,6 +246,11 @@ class CrowdfundingProject:
         print()
 
     def print_payment_summary(self):
+        """
+        Print the payment summary.
+
+        :return: None
+        """
         print(encapsulate_as_text_header("Payments Summary"))
         payment_summary = self.get_payment_summary()
         for description, details in payment_summary.items():
@@ -248,6 +263,11 @@ class CrowdfundingProject:
         print()
 
     def print_sale_summary(self):
+        """
+        Prints the sales summary and partner details for each sale.
+
+        :return: None
+        """
         print(encapsulate_as_text_header("Sales Summary"))
         sales_summary = self.get_sale_summary()
         partner_summary = self.get_partner_summary()

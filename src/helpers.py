@@ -1,4 +1,4 @@
-def separator(width=20, char='-'):
+def separator(width=20, char='-') -> str:
     """
     Prints a separator line with the specified width and character.
 
@@ -10,7 +10,7 @@ def separator(width=20, char='-'):
     return char * width
 
 
-def encapsulate_as_text_header(text, level=1):
+def encapsulate_as_text_header(text, level=1) -> str:
     """
     :param text: The text to be encapsulated as a header.
     :param level: The level of the header. Defaults to 1.
