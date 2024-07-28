@@ -40,7 +40,7 @@ def main():
     project.print_payment_summary()
 
     # Print sales summary
-    project.print_sale_summary()
+    # project.print_sale_summary()
 
     # Print project summary
     print(project)
