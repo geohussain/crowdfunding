@@ -66,28 +66,44 @@ class CrowdfundingProject:
         self.partners.append(partner)
         return partner
 
-    def add_payment(self, amount: float, date: datetime, partner: Partner, expense: Optional[Expense] = None) -> None:
+    def add_payment(self, amount: float, date: datetime, partner: Partner,
+                    expense: Optional[Expense] = None) -> Payment:
         """
-        Add a new payment to the project.
+        Adds a payment to the list of payments.
 
-        Args:
-            amount (float): The amount of the payment.
-            date (datetime): The date when the payment was made.
-            partner (Partner): The partner who made the payment.
-            expense (Optional[Expense]): The expense associated with the payment, if any.
-        """
-        self.payments.append(Payment(amount, date, partner, expense))
+        :param amount: The amount of the payment.
+        :type amount: float
+        :param date: The date of the payment.
+        :type date: datetime
+        :param partner: The partner associated with the payment.
+        :type partner: Partner
+        :param expense: The expense associated with the payment, if any. (default: None)
+        :type expense: Optional[Expense]
 
-    def add_sale(self, amount: float, date: datetime, description: str) -> None:
+        :return: The new payment object that was added.
+        :rtype: Payment
         """
-        Add a new sale to the project.
+        payment = Payment(amount, date, partner, expense)
+        self.payments.append(payment)
+        return payment
 
-        Args:
-            amount (float): The amount of the sale.
-            date (datetime): The date when the sale occurred.
-            description (str): A brief description of the sale.
+    def add_sale(self, amount: float, date: datetime, description: str) -> Sale:
         """
-        self.sales.append(Sale(amount, date, description))
+        Method to add a sale to the sales list.
+
+        :param amount: The amount of the sale.
+        :type amount: float
+        :param date: The date of the sale.
+        :type date: datetime
+        :param description: The description of the sale.
+        :type description: str
+
+        :return: The created Sale object.
+        :rtype: Sale
+        """
+        sale = Sale(amount, date, description)
+        self.sales.append(sale)
+        return sale
 
     def total_expenses(self) -> float:
         """Calculate the total amount of all expenses."""
