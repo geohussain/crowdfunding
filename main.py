@@ -26,6 +26,10 @@ def main():
     project.add_payment(947045, datetime(2024, 7, 24), hussain_alsalim, land_price)
     project.add_payment(120000, datetime(2024, 7, 28), mohammed_alhawaj, land_price)
     project.add_payment(205481, datetime(2024, 7, 28), ali_aldawood, land_price)
+    project.add_payment(405705, datetime(2024, 8, 15), ali_alfaraj, land_price)
+    project.add_payment(207677, datetime(2024, 8, 15), saleh_alnasser, land_price)
+    project.add_payment(178102, datetime(2024, 8, 15), saleh_alnasser, price_increase)
+    project.add_payment(54221, datetime(2024, 8, 15), saleh_alnasser, auction_fees)
 
     # Add a sale
     # project.add_sale(1250000, datetime(2025, 6, 1), "Duplex 1 Sale")
