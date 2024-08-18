@@ -12,11 +12,13 @@ def main():
     auction_fees = project.add_expense("Auction Agent Fees", 54221, datetime(2024, 7, 22))
     vat = project.add_expense("VAT", 94295.40, datetime(2024, 7, 22))
     agent_fees = project.add_expense("Agent Fees", 52955, datetime(2024, 7, 22))
+    lawyer_land_buying_fee = project.add_expense("Lawyer Land Buying Fee", 690, datetime(2024, 8, 18))
+
 
     # Add partners
     hussain_alsalim = project.add_partner("Hussain AlSalim", 1000000)
     ali_alfaraj = project.add_partner("Ali AlFaraj", 500000.40)
-    saleh_alnasser = project.add_partner("Saleh AlNasser", 440000)
+    saleh_alnasser = project.add_partner("Saleh AlNasser", 440000 + 690)
     ali_aldawood = project.add_partner("Ali AlDawood", 205481)
     mohammed_alhawaj = project.add_partner("Mohammed AlHawaj", 120000)
 
@@ -30,6 +32,7 @@ def main():
     project.add_payment(207677, datetime(2024, 8, 15), saleh_alnasser, land_price)
     project.add_payment(178102, datetime(2024, 8, 15), saleh_alnasser, price_increase)
     project.add_payment(54221, datetime(2024, 8, 15), saleh_alnasser, auction_fees)
+    project.add_payment(690, datetime(2024, 8, 18), saleh_alnasser, lawyer_land_buying_fee)
 
     # Add a sale
     # project.add_sale(1250000, datetime(2025, 6, 1), "Duplex 1 Sale")
