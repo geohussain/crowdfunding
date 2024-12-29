@@ -15,12 +15,13 @@ def main():
     lawyer_land_buying_fee = project.add_expense("Lawyer Land Buying Fee", 690, datetime(2024, 8, 18))
     land_split_fees = project.add_expense("Land Split Fees", 221.60, datetime(2024, 11, 4))
     land_split_fees_order = project.add_expense("Land Split Fees order", 703, datetime(2024, 12, 18))
+    land_split_fee_two_lands = project.add_expense("Land Split Two Lands", 400, datetime(2024, 12, 29))
 
     # Add partners
     hussain_alsalim = project.add_partner("Hussain AlSalim", 1000000)
     ali_alfaraj = project.add_partner("Ali AlFaraj", 500000.40)
     saleh_alnasser = project.add_partner("Saleh AlNasser", 440000 + 690)
-    ali_aldawood = project.add_partner("Ali AlDawood", 205481 + 221.60 + 703)
+    ali_aldawood = project.add_partner("Ali AlDawood", 205481 + 221.60 + 703 + 400)
     mohammed_alhawaj = project.add_partner("Mohammed AlHawaj", 120000)
 
     # Add payments
@@ -36,6 +37,7 @@ def main():
     project.add_payment(690, datetime(2024, 8, 18), saleh_alnasser, lawyer_land_buying_fee)
     project.add_payment(221.60, datetime(2024, 11, 4), ali_aldawood, land_split_fees)
     project.add_payment(703, datetime(2024, 12, 18), ali_aldawood, land_split_fees_order)
+    project.add_payment(400, datetime(2024, 12, 29), ali_aldawood, land_split_fee_two_lands)
 
     # Add a sale
     # project.add_sale(1250000, datetime(2025, 6, 1), "Duplex 1 Sale")
