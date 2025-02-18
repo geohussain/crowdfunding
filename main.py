@@ -20,6 +20,7 @@ def main():
     land_report_fees_2 = project.add_expense("Land Report Fees - Sadad Balady", 394, datetime(2025, 2, 11))
     construction_insurance_1 = project.add_expense("Construction Insurance - Part One", 9774.93, datetime(2025, 2, 16))
     construction_insurance_2 = project.add_expense("Construction Insurance - Part Two", 4715.88, datetime(2025, 2, 16))
+    land_one_geographic_report = project.add_expense("Area Report Fees - Land One", 330, datetime(2025, 2, 18))
 
     # Add partners
     hussain_alsalim = project.add_partner("Hussain AlSalim", 1000000)
@@ -27,7 +28,7 @@ def main():
     saleh_alnasser = project.add_partner("Saleh AlNasser", 440000 + 690)
     ali_aldawood = project.add_partner("Ali AlDawood",
                                        205481 + 221.60 + 703 + 400 + 920 + 394
-                                       + 9774.93 + 4715.88)
+                                       + 9774.93 + 4715.88 + 330)
     mohammed_alhawaj = project.add_partner("Mohammed AlHawaj", 120000)
 
     # Add payments
@@ -48,6 +49,7 @@ def main():
     project.add_payment(394, datetime(2025, 2, 11), ali_aldawood, land_report_fees_2)
     project.add_payment(9774.93, datetime(2025, 2, 16), ali_aldawood, construction_insurance_1)
     project.add_payment(4715.88, datetime(2025, 2, 16), ali_aldawood, construction_insurance_2)
+    project.add_payment(330, datetime(2025, 2, 18), ali_aldawood, land_one_geographic_report)
 
     # Add a sale
     # project.add_sale(1250000, datetime(2025, 6, 1), "Duplex 1 Sale")
