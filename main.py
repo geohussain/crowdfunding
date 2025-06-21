@@ -28,6 +28,12 @@ def main():
     blueprints_fees = project.add_expense("Blueprints Fees", 80000, datetime(2025, 5, 25))
     land_one_fill = project.add_expense("Land One Fill", 35000, datetime(2025, 6, 4))
     cementing_fees_1 = project.add_expense("Cementing Fees #1", 100000, datetime(2025, 6, 12))
+    base_steel_bars = project.add_expense("Base Steel Bars Fees", 37651, datetime(2025, 6, 21))
+    base_concrete_blocks = project.add_expense("Base Concrete Blocks Fees", 1955, datetime(2025, 6, 21))
+    contracting_payment_1 = project.add_expense("Contracting Payment Fees #1", 20000, datetime(2025, 6, 21))
+    plastic_cover_fee_1 = project.add_expense("Plastic Cover Fees #1", 147.20, datetime(2025, 6, 21))
+    plastic_cover_fee_2 = project.add_expense("Plastic Cover Fees #2", 220.80, datetime(2025, 6, 21))
+
 
     # Add partners
     hussain_alsalim = project.add_partner("Hussain AlSalim", 1000000)
@@ -36,8 +42,10 @@ def main():
     ali_aldawood = project.add_partner("Ali AlDawood",
                                        205481 + 221.60 + 703 + 400 + 920 + 394
                                        + 9774.93 + 4715.88 + 330 + 8625 + 4286.35
-                                       + 6374 + 5222 + 80000 + 35000 + 100000)
+                                       + 6374 + 5222 + 80000 + 35000 + 100000
+                                       + 37651 + 1955 + 20368)
     mohammed_alhawaj = project.add_partner("Mohammed AlHawaj", 120000)
+
 
     # Add payments
     project.add_payment(52955, datetime(2024, 7, 22), hussain_alsalim, agent_fees)
@@ -65,6 +73,12 @@ def main():
     project.add_payment(80000, datetime(2025, 5, 25), ali_aldawood, blueprints_fees)
     project.add_payment(35000, datetime(2025, 6, 4), ali_aldawood, land_one_fill)
     project.add_payment(100000, datetime(2025, 6, 12), ali_aldawood, cementing_fees_1)
+    project.add_payment(37651, datetime(2025, 6, 21), ali_aldawood, base_steel_bars)
+    project.add_payment(1955, datetime(2025, 6, 21), ali_aldawood, base_concrete_blocks)
+    project.add_payment(20000, datetime(2025, 6, 21), ali_aldawood, contracting_payment_1)
+    project.add_payment(147.20, datetime(2025, 6, 21), ali_aldawood, plastic_cover_fee_1)
+    project.add_payment(220.80, datetime(2025, 6, 21), ali_aldawood, plastic_cover_fee_2)
+
 
     # Add a sale
     # project.add_sale(1250000, datetime(2025, 6, 1), "Duplex 1 Sale")
