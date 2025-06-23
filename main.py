@@ -33,6 +33,7 @@ def main():
     contracting_payment_1 = project.add_expense("Contracting Payment Fees #1", 20000, datetime(2025, 6, 21))
     plastic_cover_fee_1 = project.add_expense("Plastic Cover Fees #1", 147.20, datetime(2025, 6, 21))
     plastic_cover_fee_2 = project.add_expense("Plastic Cover Fees #2", 220.80, datetime(2025, 6, 21))
+    deformed_steel_bars = project.add_expense("Deformed Steel Bars Fees", 10580, datetime(2025, 6, 23))
 
 
     # Add partners
@@ -43,7 +44,7 @@ def main():
                                        205481 + 221.60 + 703 + 400 + 920 + 394
                                        + 9774.93 + 4715.88 + 330 + 8625 + 4286.35
                                        + 6374 + 5222 + 80000 + 35000 + 100000
-                                       + 37651 + 1955 + 20368)
+                                       + 37651 + 1955 + 20368 + 10580)
     mohammed_alhawaj = project.add_partner("Mohammed AlHawaj", 120000)
 
 
@@ -78,6 +79,7 @@ def main():
     project.add_payment(20000, datetime(2025, 6, 21), ali_aldawood, contracting_payment_1)
     project.add_payment(147.20, datetime(2025, 6, 21), ali_aldawood, plastic_cover_fee_1)
     project.add_payment(220.80, datetime(2025, 6, 21), ali_aldawood, plastic_cover_fee_2)
+    project.add_payment(10580, datetime(2025, 6, 23), ali_aldawood, deformed_steel_bars)
 
 
     # Add a sale
