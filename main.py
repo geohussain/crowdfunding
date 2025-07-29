@@ -36,6 +36,12 @@ def main():
     deformed_steel_bars = project.add_expense("Deformed Steel Bars Fees", 10580, datetime(2025, 6, 23))
     base_steel_bars_2 = project.add_expense("Base Steel Bars Fees #2", 11902.50, datetime(2025, 6, 25))
     base_concrete_blocks_2 = project.add_expense("Base Concrete Blocks Fees #2", 4036.50, datetime(2025, 7, 23))
+    base_concrete_blocks_3 = project.add_expense("Base Concrete Blocks Fees #3", 1955, datetime(2025, 7, 29))
+    misc_fee_1 = project.add_expense("Misc Fee #1", 500, datetime(2025, 7, 29))
+    misc_fee_2 = project.add_expense("Misc Fee #2", 174.02, datetime(2025, 7, 29))
+    misc_fee_3 = project.add_expense("Misc Fee #3", 255, datetime(2025, 7, 29))
+    contracting_payment_2 = project.add_expense("Contracting Payment Fees #2", 20000, datetime(2025, 7, 29))
+    contracting_payment_3 = project.add_expense("Contracting Payment Fees #3", 20000, datetime(2025, 7, 29))
 
 
 
@@ -48,7 +54,7 @@ def main():
                                        + 9774.93 + 4715.88 + 330 + 8625 + 4286.35
                                        + 6374 + 5222 + 80000 + 35000 + 100000
                                        + 37651 + 1955 + 20368 + 10580 + 11902.50
-                                       + 4036.50)
+                                       + 4036.50 + 500 + 174.02 + 255 + 20000 +20000)
     mohammed_alhawaj = project.add_partner("Mohammed AlHawaj", 120000)
 
 
@@ -86,6 +92,12 @@ def main():
     project.add_payment(10580, datetime(2025, 6, 23), ali_aldawood, deformed_steel_bars)
     project.add_payment(11902.50, datetime(2025, 6, 25), ali_aldawood, base_steel_bars_2)
     project.add_payment(4036.50, datetime(2025, 7, 23), ali_aldawood, base_concrete_blocks_2)
+    project.add_payment(1955, datetime(2025, 7, 29), ali_aldawood, base_concrete_blocks_3)
+    project.add_payment(500, datetime(2025, 7, 29), ali_aldawood, misc_fee_1)
+    project.add_payment(174.02, datetime(2025, 7, 29), ali_aldawood, misc_fee_2)
+    project.add_payment(255, datetime(2025, 7, 29), ali_aldawood, misc_fee_3)
+    project.add_payment(20000, datetime(2025, 7, 29), ali_aldawood, contracting_payment_2)
+    project.add_payment(20000, datetime(2025, 7, 29), ali_aldawood, contracting_payment_3)
 
 
     # Add a sale
