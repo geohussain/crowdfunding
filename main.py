@@ -42,6 +42,9 @@ def main():
     misc_fee_3 = project.add_expense("Misc Fee #3", 255, datetime(2025, 7, 29))
     contracting_payment_2 = project.add_expense("Contracting Payment Fees #2", 20000, datetime(2025, 7, 29))
     contracting_payment_3 = project.add_expense("Contracting Payment Fees #3", 20000, datetime(2025, 7, 29))
+    base_concrete_blocks_4 = project.add_expense("Base Concrete Blocks Fees #4", 598, datetime(2025, 7, 30))
+    concrete_blocks_top_up = project.add_expense("Concrete Blocks Top Up", 50000, datetime(2025, 7, 31))
+    steel_bars_top_up = project.add_expense("Steel Bars Top Up", 50000, datetime(2025, 7, 31))
 
 
 
@@ -55,7 +58,7 @@ def main():
                                        + 6374 + 5222 + 80000 + 35000 + 100000
                                        + 37651 + 1955 + 20368 + 10580 + 11902.50
                                        + 4036.50 + 1955 + 500 + 174.02 + 255
-                                       + 20000 +20000)
+                                       + 20000 +20000 + 598 + 50000 + 50000)
     mohammed_alhawaj = project.add_partner("Mohammed AlHawaj", 120000)
 
 
@@ -99,6 +102,9 @@ def main():
     project.add_payment(255, datetime(2025, 7, 29), ali_aldawood, misc_fee_3)
     project.add_payment(20000, datetime(2025, 7, 29), ali_aldawood, contracting_payment_2)
     project.add_payment(20000, datetime(2025, 7, 29), ali_aldawood, contracting_payment_3)
+    project.add_payment(598, datetime(2025, 7, 30), ali_aldawood, base_concrete_blocks_4)
+    project.add_payment(50000, datetime(2025, 7, 31), ali_aldawood, concrete_blocks_top_up)
+    project.add_payment(50000, datetime(2025, 7, 31), ali_aldawood, steel_bars_top_up)
 
 
     # Add a sale
