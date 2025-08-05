@@ -1,12 +1,12 @@
 from dataclasses import dataclass, field
 from typing import List, Dict, Optional
-from datetime import datetime
+from datetime import datetime, timedelta
 from .expense import Expense
 from .partner import Partner
 from .payment import Payment
 from .sale import Sale
 from .payment_status import PaymentStatus
-from .helpers import separator, encapsulate_as_text_header
+from .helpers import separator, encapsulate_as_text_header, format_currency, create_table_row, create_section_divider
 
 
 @dataclass
@@ -212,6 +212,71 @@ class CrowdfundingProject:
             for i, payment in enumerate(self.payments)
         }
 
+    def _format_relative_date(self, date: datetime) -> str:
+        """
+        Format a date as a relative time string with months and years support.
+        
+        Args:
+            date: The date to format
+            
+        Returns:
+            str: Formatted relative date string
+        """
+        today = datetime.now().date()
+        target_date = date.date()
+        
+        diff = (today - target_date).days
+        
+        if diff == 0:
+            return f"today ({target_date})"
+        elif diff == 1:
+            return f"yesterday ({target_date})"
+        elif diff == -1:
+            return f"tomorrow ({target_date})"
+        elif diff > 1:
+            # Calculate years, months, and days
+            years = diff // 365
+            remaining_days = diff % 365
+            months = remaining_days // 30
+            days = remaining_days % 30
+            
+            parts = []
+            if years > 0:
+                parts.append(f"{years} year{'s' if years != 1 else ''}")
+            if months > 0:
+                parts.append(f"{months} month{'s' if months != 1 else ''}")
+            if days > 0 or not parts:  # Show days if no years/months, or if there are remaining days
+                parts.append(f"{days} day{'s' if days != 1 else ''}")
+            
+            if len(parts) > 1:
+                time_str = ", ".join(parts[:-1]) + f" and {parts[-1]} ago"
+            else:
+                time_str = f"{parts[0]} ago"
+                
+            return f"{time_str} ({target_date})"
+        else:
+            # Future dates
+            abs_diff = abs(diff)
+            years = abs_diff // 365
+            remaining_days = abs_diff % 365
+            months = remaining_days // 30
+            days = remaining_days % 30
+            
+            parts = []
+            if years > 0:
+                parts.append(f"{years} year{'s' if years != 1 else ''}")
+            if months > 0:
+                parts.append(f"{months} month{'s' if months != 1 else ''}")
+            if days > 0 or not parts:
+                parts.append(f"{days} day{'s' if days != 1 else ''}")
+            
+            if len(parts) > 1:
+                time_str = "in " + ", ".join(parts[:-1]) + f" and {parts[-1]}"
+            else:
+                time_str = f"in {parts[0]}"
+                
+            return f"{time_str} ({target_date})"
+
     def get_sale_summary(self) -> Dict[str, Dict[str, float]]:
         """
         Generate a summary of all sales, including their total amounts and descriptions.
@@ -234,14 +299,25 @@ class CrowdfundingProject:
         :return: None
         """
         print(encapsulate_as_text_header("Partners Summary"))
+        print()
+        
         partner_summary = self.get_partner_summary()
+        
+        # Table header
+        print(create_table_row("Partner", "Investment Plan", "Ownership %", "Total Payments", "Balance", 
+                              widths=[20, 18, 12, 18, 18], align='left'))
+        print('├' + '─' * 20 + '┼' + '─' * 18 + '┼' + '─' * 12 + '┼' + '─' * 18 + '┼' + '─' * 18 + '┤')
+        
         for name, details in partner_summary.items():
-            print(f"Partner: {name}")
-            print(f"Investment Plan: SAR {details['investment']:,.2f}")
-            print(f"Ownership Percentage: {details['ownership_percentage']:.2f}%")
-            print(f"Total Payments: SAR {details['total_payments']:,.2f}")
-            print(f"Investment Balance: SAR {details['investment_balance']:,.2f}")
-            print(separator())
+            investment = format_currency(details['investment'])
+            payments = format_currency(details['total_payments'])
+            balance = format_currency(details['investment_balance'])
+            ownership = f"{details['ownership_percentage']:.2f}%"
+            
+            print(create_table_row(name, investment, ownership, payments, balance,
+                                 widths=[20, 18, 12, 18, 18], align='left'))
+        
+        print('└' + '─' * 20 + '┴' + '─' * 18 + '┴' + '─' * 12 + '┴' + '─' * 18 + '┴' + '─' * 18 + '┘')
         print()
 
     def print_expense_summary(self):
@@ -278,6 +354,101 @@ class CrowdfundingProject:
             print(separator())
         print()
 
+    def print_expenses_by_date(self, since: datetime = None):
+        """
+        Print expenses sorted by date from oldest to newest with relative date formatting.
+        
+        Args:
+            since (datetime, optional): Only show expenses from this date onwards
+        """
+        print(encapsulate_as_text_header("Expenses by Date"))
+        print()
+        
+        # Sort expenses by date
+        sorted_expenses = sorted(self.expenses, key=lambda x: x.date)
+        
+        # Filter by since date if provided
+        if since:
+            sorted_expenses = [exp for exp in sorted_expenses if exp.date >= since]
+            print(f"📅 Showing expenses since: {self._format_relative_date(since)}")
+            print(separator())
+        
+        current_month = None
+        for expense in sorted_expenses:
+            expense_month = expense.date.strftime("%B %Y")
+            
+            # Group by month
+            if current_month != expense_month:
+                if current_month is not None:
+                    print()
+                print(create_section_divider(expense_month))
+                current_month = expense_month
+                
+            paid_amount = sum(payment.amount for payment in self.payments if payment.expense == expense)
+            remaining = expense.amount - paid_amount
+            
+            if remaining == expense.amount:
+                status = PaymentStatus.UNPAID
+                status_icon = "❌"
+            elif remaining == 0:
+                status = PaymentStatus.FULLY_PAID
+                status_icon = "✅"
+            else:
+                status = PaymentStatus.PARTIALLY_PAID
+                status_icon = "⚠️"
+            
+            print(f"│ 📅 {self._format_relative_date(expense.date)}")
+            print(f"│ 💰 {expense.description}")
+            print(f"│ 📊 Total: {format_currency(expense.amount)} │ Paid: {format_currency(paid_amount)} │ Remaining: {format_currency(remaining)}")
+            print(f"│ {status_icon} Status: {status.value}")
+            print('├' + '─' * 48 + '┤')
+        print('└' + '─' * 48 + '┘')
+        print()
+
+    def print_payments_by_date(self, since: datetime = None):
+        """
+        Print payments sorted by date from oldest to newest with relative date formatting.
+        
+        Args:
+            since (datetime, optional): Only show payments from this date onwards
+        """
+        print(encapsulate_as_text_header("Payments by Date"))
+        print()
+        
+        # Sort payments by date
+        sorted_payments = sorted(self.payments, key=lambda x: x.date)
+        
+        # Filter by since date if provided
+        if since:
+            sorted_payments = [payment for payment in sorted_payments if payment.date >= since]
+            print(f"📅 Showing payments since: {self._format_relative_date(since)}")
+            print(separator())
+        
+        current_month = None
+        for i, payment in enumerate(sorted_payments):
+            payment_month = payment.date.strftime("%B %Y")
+            
+            # Group by month
+            if current_month != payment_month:
+                if current_month is not None:
+                    print()
+                print(create_section_divider(payment_month))
+                current_month = payment_month
+            
+            percentage = payment.amount / payment.expense.amount * 100 if payment.expense else 0
+            
+            print(f"│ 💳 Payment #{i+1}")
+            print(f"│ 📅 {self._format_relative_date(payment.date)}")
+            print(f"│ 👤 Partner: {payment.partner.name}")
+            print(f"│ 💰 Amount: {format_currency(payment.amount)}")
+            if payment.expense:
+                print(f"│ 📋 Expense: {payment.expense.description} ({percentage:,.1f}%)")
+            else:
+                print("│ 📋 Expense: Not specified")
+            print('├' + '─' * 48 + '┤')
+        print('└' + '─' * 48 + '┘')
+        print()
+
     def print_sale_summary(self):
         """
         Prints the sales summary and partner details for each sale.
@@ -310,17 +481,27 @@ class CrowdfundingProject:
         Returns:
             str: A formatted string containing key information about the project.
         """
+        gains_pct = self.project_balance() / self.total_payments() * 100 if self.total_payments() > 0 else 0
+        remaining_expenses = self.total_expenses() - self.total_payments()
+        
+        # Status indicators
+        balance_icon = "📈" if self.project_balance() >= 0 else "📉"
+        completion_pct = (self.total_payments() / self.total_expenses() * 100) if self.total_expenses() > 0 else 0
+        completion_icon = "✅" if completion_pct >= 100 else "🚧" if completion_pct >= 50 else "⏳"
+        
         return (
-            encapsulate_as_text_header("Project Summary") + "\n"
-            f"Crowdfunding Project: {self.name}\n"
-            f"Target Amount: SAR {self.target_amount():,.2f}\n"
-            f"Start Date: {self.start_date.date()}\n"
-            f"End Date: {self.end_date.date()}\n"
-            f"Total Investments Plan: SAR {self.total_investments():,.2f}\n"
-            f"Total Expenses: SAR {self.total_expenses():,.2f}\n"
-            f"Total Payments: SAR {self.total_payments():,.2f}\n"
-            f"Total Sales: SAR {self.total_sales():,.2f}\n"
-            f"Current Balance: SAR {self.project_balance():,.2f}\n"
-            f"Gains Percentage: {self.project_balance() / self.total_payments() * 100:,.2f} %\n"
-            f"Remaining Total Expenses: SAR {self.total_expenses() - self.total_payments():,.2f}"
+            encapsulate_as_text_header("Project Summary") + "\n\n"
+            f"🏗️  Project: {self.name}\n"
+            f"🎯  Target Amount: {format_currency(self.target_amount())}\n"
+            f"📅  Duration: {self.start_date.date()} → {self.end_date.date()}\n"
+            f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+            f"💰  Total Investments Plan: {format_currency(self.total_investments())}\n"
+            f"📊  Total Expenses: {format_currency(self.total_expenses())}\n"
+            f"💳  Total Payments: {format_currency(self.total_payments())}\n"
+            f"💵  Total Sales: {format_currency(self.total_sales())}\n"
+            f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+            f"{balance_icon}  Current Balance: {format_currency(self.project_balance())}\n"
+            f"📈  Gains Percentage: {gains_pct:,.2f}%\n"
+            f"{completion_icon}  Project Completion: {completion_pct:.1f}%\n"
+            f"⏳  Remaining Expenses: {format_currency(remaining_expenses)}"
         )
