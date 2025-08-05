@@ -1,9 +1,9 @@
-def separator(width=50, char='─') -> str:
+def separator(width=30, char='-') -> str:
     """
     Prints a separator line with the specified width and character.
 
-    :param width: The width of the separator line (default is 50).
-    :param char: The character used to create the separator line (default is '─').
+    :param width: The width of the separator line (default is 30).
+    :param char: The character used to create the separator line (default is '-').
 
     :return: The separator line as a string.
     """
@@ -21,13 +21,11 @@ def encapsulate_as_text_header(text, level=1) -> str:
         raise ValueError("Header level must be 1 or 2")
 
     if level == 1:
-        # Main header with box drawing
-        border = '═' * (len(text) + 4)
-        return f"╔{border}╗\n║  {text}  ║\n╚{border}╝"
+        # Main header - mobile friendly
+        return f"📋 {text.upper()}"
     else:
-        # Subheader with simple underline
-        underline = '─' * len(text)
-        return f"┌─ {text} ─┐\n{underline}"
+        # Subheader - simple format
+        return f"📌 {text}"
 
 
 def format_currency(amount: float, currency: str = "SAR") -> str:
@@ -41,45 +39,41 @@ def format_currency(amount: float, currency: str = "SAR") -> str:
     return f"{currency} {amount:,.2f}"
 
 
-def create_table_row(*columns, widths=None, align='left') -> str:
+def create_mobile_card(title: str, items: dict) -> str:
     """
-    Create a formatted table row with proper spacing.
+    Create a mobile-friendly card format for displaying data.
     
-    :param columns: Column values
-    :param widths: List of column widths (optional)
-    :param align: Text alignment ('left', 'right', 'center')
-    :return: Formatted table row
+    :param title: Card title/header
+    :param items: Dictionary of key-value pairs to display
+    :return: Formatted mobile card
     """
-    if widths is None:
-        widths = [20] * len(columns)
-    
-    formatted_cols = []
-    for i, col in enumerate(columns):
-        width = widths[i] if i < len(widths) else 20
-        col_str = str(col)
-        
-        if align == 'right':
-            formatted_cols.append(col_str.rjust(width))
-        elif align == 'center':
-            formatted_cols.append(col_str.center(width))
-        else:
-            formatted_cols.append(col_str.ljust(width))
-    
-    return '│ ' + ' │ '.join(formatted_cols) + ' │'
+    lines = [f"💳 {title}"]
+    for key, value in items.items():
+        lines.append(f"  {key}: {value}")
+    lines.append("")  # Empty line for spacing
+    return "\n".join(lines)
 
 
 def create_section_divider(title: str = None) -> str:
     """
-    Create a section divider with optional title.
+    Create a mobile-friendly section divider.
     
     :param title: Optional section title
     :return: Formatted section divider
     """
     if title:
-        title_len = len(title)
-        side_len = (48 - title_len) // 2
-        left_side = '─' * side_len
-        right_side = '─' * (48 - title_len - side_len)
-        return f"┌{left_side} {title} {right_side}┐"
+        return f"\n🗓️ {title.upper()}\n{'-' * 25}"
     else:
-        return '├' + '─' * 48 + '┤'
+        return f"{'-' * 30}"
+
+
+def create_compact_summary(icon: str, label: str, value: str) -> str:
+    """
+    Create a compact one-line summary for mobile.
+    
+    :param icon: Emoji icon
+    :param label: Description label
+    :param value: Value to display
+    :return: Formatted summary line
+    """
+    return f"{icon} {label}: {value}"

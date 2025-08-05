@@ -6,7 +6,7 @@ from .partner import Partner
 from .payment import Payment
 from .sale import Sale
 from .payment_status import PaymentStatus
-from .helpers import separator, encapsulate_as_text_header, format_currency, create_table_row, create_section_divider
+from .helpers import separator, encapsulate_as_text_header, format_currency, create_mobile_card, create_section_divider, create_compact_summary
 
 
 @dataclass
@@ -299,26 +299,16 @@ class CrowdfundingProject:
         :return: None
         """
         print(encapsulate_as_text_header("Partners Summary"))
-        print()
-        
         partner_summary = self.get_partner_summary()
         
-        # Table header
-        print(create_table_row("Partner", "Investment Plan", "Ownership %", "Total Payments", "Balance", 
-                              widths=[20, 18, 12, 18, 18], align='left'))
-        print('├' + '─' * 20 + '┼' + '─' * 18 + '┼' + '─' * 12 + '┼' + '─' * 18 + '┼' + '─' * 18 + '┤')
-        
         for name, details in partner_summary.items():
-            investment = format_currency(details['investment'])
-            payments = format_currency(details['total_payments'])
-            balance = format_currency(details['investment_balance'])
-            ownership = f"{details['ownership_percentage']:.2f}%"
-            
-            print(create_table_row(name, investment, ownership, payments, balance,
-                                 widths=[20, 18, 12, 18, 18], align='left'))
-        
-        print('└' + '─' * 20 + '┴' + '─' * 18 + '┴' + '─' * 12 + '┴' + '─' * 18 + '┴' + '─' * 18 + '┘')
-        print()
+            items = {
+                "Investment": format_currency(details['investment']),
+                "Ownership": f"{details['ownership_percentage']:.1f}%",
+                "Paid": format_currency(details['total_payments']),
+                "Balance": format_currency(details['investment_balance'])
+            }
+            print(create_mobile_card(name, items))
 
     def print_expense_summary(self):
         """
@@ -362,7 +352,6 @@ class CrowdfundingProject:
             since (datetime, optional): Only show expenses from this date onwards
         """
         print(encapsulate_as_text_header("Expenses by Date"))
-        print()
         
         # Sort expenses by date
         sorted_expenses = sorted(self.expenses, key=lambda x: x.date)
@@ -370,7 +359,7 @@ class CrowdfundingProject:
         # Filter by since date if provided
         if since:
             sorted_expenses = [exp for exp in sorted_expenses if exp.date >= since]
-            print(f"📅 Showing expenses since: {self._format_relative_date(since)}")
+            print(f"📅 Since: {self._format_relative_date(since)}")
             print(separator())
         
         current_month = None
@@ -379,8 +368,6 @@ class CrowdfundingProject:
             
             # Group by month
             if current_month != expense_month:
-                if current_month is not None:
-                    print()
                 print(create_section_divider(expense_month))
                 current_month = expense_month
                 
@@ -388,21 +375,21 @@ class CrowdfundingProject:
             remaining = expense.amount - paid_amount
             
             if remaining == expense.amount:
-                status = PaymentStatus.UNPAID
-                status_icon = "❌"
+                status_icon = "❌ UNPAID"
             elif remaining == 0:
-                status = PaymentStatus.FULLY_PAID
-                status_icon = "✅"
+                status_icon = "✅ PAID"
             else:
-                status = PaymentStatus.PARTIALLY_PAID
-                status_icon = "⚠️"
+                status_icon = "⚠️ PARTIAL"
             
-            print(f"│ 📅 {self._format_relative_date(expense.date)}")
-            print(f"│ 💰 {expense.description}")
-            print(f"│ 📊 Total: {format_currency(expense.amount)} │ Paid: {format_currency(paid_amount)} │ Remaining: {format_currency(remaining)}")
-            print(f"│ {status_icon} Status: {status.value}")
-            print('├' + '─' * 48 + '┤')
-        print('└' + '─' * 48 + '┘')
+            # Mobile-friendly format
+            print(f"💰 {expense.description}")
+            print(f"📅 {self._format_relative_date(expense.date)}")
+            print(f"💵 Total: {format_currency(expense.amount)}")
+            print(f"✅ Paid: {format_currency(paid_amount)}")
+            if remaining > 0:
+                print(f"⏳ Remaining: {format_currency(remaining)}")
+            print(f"{status_icon}")
+            print(separator())
         print()
 
     def print_payments_by_date(self, since: datetime = None):
@@ -413,7 +400,6 @@ class CrowdfundingProject:
             since (datetime, optional): Only show payments from this date onwards
         """
         print(encapsulate_as_text_header("Payments by Date"))
-        print()
         
         # Sort payments by date
         sorted_payments = sorted(self.payments, key=lambda x: x.date)
@@ -421,7 +407,7 @@ class CrowdfundingProject:
         # Filter by since date if provided
         if since:
             sorted_payments = [payment for payment in sorted_payments if payment.date >= since]
-            print(f"📅 Showing payments since: {self._format_relative_date(since)}")
+            print(f"📅 Since: {self._format_relative_date(since)}")
             print(separator())
         
         current_month = None
@@ -430,23 +416,20 @@ class CrowdfundingProject:
             
             # Group by month
             if current_month != payment_month:
-                if current_month is not None:
-                    print()
                 print(create_section_divider(payment_month))
                 current_month = payment_month
             
             percentage = payment.amount / payment.expense.amount * 100 if payment.expense else 0
             
-            print(f"│ 💳 Payment #{i+1}")
-            print(f"│ 📅 {self._format_relative_date(payment.date)}")
-            print(f"│ 👤 Partner: {payment.partner.name}")
-            print(f"│ 💰 Amount: {format_currency(payment.amount)}")
+            print(f"💳 Payment #{i+1}")
+            print(f"📅 {self._format_relative_date(payment.date)}")
+            print(f"👤 {payment.partner.name}")
+            print(f"💰 {format_currency(payment.amount)}")
             if payment.expense:
-                print(f"│ 📋 Expense: {payment.expense.description} ({percentage:,.1f}%)")
+                print(f"📋 {payment.expense.description} ({percentage:,.0f}%)")
             else:
-                print("│ 📋 Expense: Not specified")
-            print('├' + '─' * 48 + '┤')
-        print('└' + '─' * 48 + '┘')
+                print("📋 Not specified")
+            print(separator())
         print()
 
     def print_sale_summary(self):
@@ -490,18 +473,18 @@ class CrowdfundingProject:
         completion_icon = "✅" if completion_pct >= 100 else "🚧" if completion_pct >= 50 else "⏳"
         
         return (
-            encapsulate_as_text_header("Project Summary") + "\n\n"
-            f"🏗️  Project: {self.name}\n"
-            f"🎯  Target Amount: {format_currency(self.target_amount())}\n"
-            f"📅  Duration: {self.start_date.date()} → {self.end_date.date()}\n"
-            f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-            f"💰  Total Investments Plan: {format_currency(self.total_investments())}\n"
-            f"📊  Total Expenses: {format_currency(self.total_expenses())}\n"
-            f"💳  Total Payments: {format_currency(self.total_payments())}\n"
-            f"💵  Total Sales: {format_currency(self.total_sales())}\n"
-            f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-            f"{balance_icon}  Current Balance: {format_currency(self.project_balance())}\n"
-            f"📈  Gains Percentage: {gains_pct:,.2f}%\n"
-            f"{completion_icon}  Project Completion: {completion_pct:.1f}%\n"
-            f"⏳  Remaining Expenses: {format_currency(remaining_expenses)}"
+            encapsulate_as_text_header("Project Summary") + "\n"
+            f"🏗️ {self.name}\n"
+            f"🎯 Target: {format_currency(self.target_amount())}\n"
+            f"📅 {self.start_date.date()} to {self.end_date.date()}\n"
+            f"{separator()}\n"
+            f"💰 Investments: {format_currency(self.total_investments())}\n"
+            f"📊 Total Expenses: {format_currency(self.total_expenses())}\n"
+            f"💳 Total Payments: {format_currency(self.total_payments())}\n"
+            f"💵 Total Sales: {format_currency(self.total_sales())}\n"
+            f"{separator()}\n"
+            f"{balance_icon} Balance: {format_currency(self.project_balance())}\n"
+            f"📈 Gains: {gains_pct:,.1f}%\n"
+            f"{completion_icon} Complete: {completion_pct:.0f}%\n"
+            f"⏳ Remaining: {format_currency(remaining_expenses)}"
         )
