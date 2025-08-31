@@ -51,6 +51,7 @@ def add_payments(project, partners, expenses):
     project.add_payment(50000, datetime(2025, 7, 31), partners['ali_aldawood'], expenses['concrete_blocks_top_up'])
     project.add_payment(50000, datetime(2025, 7, 31), partners['ali_aldawood'], expenses['steel_bars_top_up'])
     project.add_payment(2196.50, datetime(2025, 8, 4), partners['ali_aldawood'], expenses['black_tar'])
+    project.add_payment(1727.88, datetime(2025, 8, 31), partners['ali_aldawood'], expenses['plumbing_supplies_1'])
     
     # Contracting payments
     project.add_payment(20000, datetime(2025, 6, 21), partners['ali_aldawood'], expenses['contracting_payment_1'])
