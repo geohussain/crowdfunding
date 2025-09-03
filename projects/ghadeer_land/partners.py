@@ -13,7 +13,7 @@ def add_partners(project):
                      + 37651 + 1955 + 20368 + 10580 + 11902.50
                      + 4036.50 + 1955 + 500 + 174.02 + 255
                      + 20000 + 20000 + 598 + 50000 + 50000 + 2196.50
-                     + 20400 + 1727.88)
+                     + 20400 + 1727.88 + 20000)
     
     partners['ali_aldawood'] = project.add_partner("Ali AlDawood", ali_investment)
     partners['mohammed_alhawaj'] = project.add_partner("Mohammed AlHawaj", 120000)

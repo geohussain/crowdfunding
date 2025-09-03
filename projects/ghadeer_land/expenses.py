@@ -49,6 +49,7 @@ def add_expenses(project):
     expenses['steel_bars_top_up'] = project.add_expense("Steel Bars Top Up", 50000, datetime(2025, 7, 31))
     expenses['black_tar'] = project.add_expense("Black Tar", 2196.50, datetime(2025, 8, 4))
     expenses['plumbing_supplies_1'] = project.add_expense("Plumbing Supplies #1", 1727.88, datetime(2025, 8, 31))
+    expenses['plumbing_supplies_wallet'] = project.add_expense("Plumbing Supplies Wallet", 20000, datetime(2025, 9, 3))
 
     # Contracting payments
     expenses['contracting_payment_1'] = project.add_expense("Contracting Payment Fees #1", 20000, datetime(2025, 6, 21))
