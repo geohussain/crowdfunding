@@ -34,6 +34,7 @@ def add_expenses(project):
     expenses['land_one_fill'] = project.add_expense("Land One Fill", 35000, datetime(2025, 6, 4))
     expenses['cementing_fees_1'] = project.add_expense("Cementing Fees #1", 100000, datetime(2025, 6, 12))
     expenses['land_one_sand_fill'] = project.add_expense("Land One Sand Fill", 20400, datetime(2025, 8, 22))
+    expenses['land_one_second_land_fill'] = project.add_expense("Land One Second Land Fill", 8000, datetime(2025, 9, 17))
 
     # Materials and supplies
     expenses['base_steel_bars'] = project.add_expense("Base Steel Bars Fees", 37651, datetime(2025, 6, 21))
