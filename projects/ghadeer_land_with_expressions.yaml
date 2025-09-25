@@ -12,10 +12,8 @@ partners:
   - name: "Ali AlFaraj"
     investment_amount: 500000.40
   - name: "Saleh AlNasser"
-    investment_amount: "440000 + 690"
+    investment_amount: 440690
   - name: "Ali AlDawood"
-    # This demonstrates the mathematical expression capability
-    # Breaking down Ali AlDawood's investment into the actual components from the original calculation
     investment_amount: "205481 + 221.60 + 703 + 400 + 920 + 394 +
       9774.93 + 4715.88 + 330 + 8625 + 4286.35 + 6374 +
       5222 + 80000 + 35000 + 100000 + 37651 + 1955 + 20368 + 10580 +
@@ -87,7 +85,7 @@ expenses:
 
   # Construction and development expenses
   - description: "Blueprints Fees"
-    amount: "50000 + 30000"  # Example of expression in expense
+    amount: 80000
     date: "2025-05-25"
   - description: "Land One Fill"
     amount: 35000
@@ -143,7 +141,7 @@ expenses:
     amount: 1727.88
     date: "2025-08-31"
   - description: "Plumbing Supplies Wallet"
-    amount: "10000 + 10000"  # Another example of expression
+    amount: 20000
     date: "2025-09-03"
 
   # Contracting payments
@@ -264,7 +262,7 @@ payments:
     expense: "Building License Fee - Land One"
 
   # Development and construction payments
-  - amount: "50000 + 30000"  # Expression in payment amount
+  - amount: 80000
     date: "2025-05-25"
     partner: "Ali AlDawood"
     expense: "Blueprints Fees"
@@ -338,7 +336,7 @@ payments:
     date: "2025-08-31"
     partner: "Ali AlDawood"
     expense: "Plumbing Supplies #1"
-  - amount: "10000 + 10000"  # Expression in payment amount
+  - amount: 20000
     date: "2025-09-03"
     partner: "Ali AlDawood"
     expense: "Plumbing Supplies Wallet"
