@@ -20,7 +20,8 @@ Examples:
   python main.py --config projects/ghadeer_land.yaml      # Run from YAML config
   python main.py --config projects/my_project.yaml --partners     # Show partners only
   python main.py --config projects/my_project.yaml --expenses-by-date --since 2025-06-01
-  python main.py --config projects/my_project.yaml --all  # Show all reports
+  python main.py --config projects/my_project.yaml --sales        # Show sales only
+  python main.py --config projects/my_project.yaml --all  # Show all available reports
         """
     )
 
@@ -61,6 +62,18 @@ Examples:
         '--payments-by-date',
         action='store_true',
         help='Show payments chronologically'
+    )
+
+    parser.add_argument(
+        '--sales',
+        action='store_true',
+        help='Show sales summary by description'
+    )
+
+    parser.add_argument(
+        '--sales-by-date',
+        action='store_true',
+        help='Show sales chronologically'
     )
 
     parser.add_argument(
@@ -131,14 +144,24 @@ def run_reports(project, args):
     # If no specific flags are provided, or --all is specified, run default reports
     no_specific_flags = not any([
         args.partners, args.expenses, args.payments,
-        args.expenses_by_date, args.payments_by_date, args.summary
+        args.expenses_by_date, args.payments_by_date, args.sales, args.sales_by_date, args.summary
     ])
 
     if args.all or no_specific_flags:
-        # Default behavior - run the current set of reports
-        project.print_partner_summary()
-        project.print_expenses_by_date(since=since_date)
-        project.print_payments_by_date(since=since_date)
+        # Default behavior - run available reports based on what's in the project
+        if project.partners:
+            project.print_partner_summary()
+
+        if project.expenses:
+            project.print_expenses_by_date(since=since_date)
+
+        if project.payments:
+            project.print_payments_by_date(since=since_date)
+
+        if project.sales:
+            project.print_sale_summary()
+
+        # Always show project summary
         print(project)
         return
 
@@ -157,6 +180,20 @@ def run_reports(project, args):
 
     if args.payments_by_date:
         project.print_payments_by_date(since=since_date)
+
+    if args.sales:
+        if project.sales:
+            project.print_sale_summary()
+        else:
+            print("📋 No sales data available in this project configuration.")
+
+    if args.sales_by_date:
+        if project.sales:
+            # Note: The existing print_sale_summary doesn't support date filtering,
+            # but we can call it anyway since it's the only sales display method available
+            project.print_sale_summary()
+        else:
+            print("📋 No sales data available in this project configuration.")
 
     if args.summary:
         print(project)

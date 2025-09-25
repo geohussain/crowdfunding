@@ -35,14 +35,23 @@ class ProjectFactory:
         # Create project instance
         project = ProjectFactory._create_project(config['project'])
 
-        # Add partners and create lookup dictionary
-        partners = ProjectFactory._add_partners(project, config['partners'])
+        # Add partners and create lookup dictionary (optional)
+        partners = {}
+        if 'partners' in config and config['partners']:
+            partners = ProjectFactory._add_partners(project, config['partners'])
 
-        # Add expenses and create lookup dictionary
-        expenses = ProjectFactory._add_expenses(project, config['expenses'])
+        # Add expenses and create lookup dictionary (optional)
+        expenses = {}
+        if 'expenses' in config and config['expenses']:
+            expenses = ProjectFactory._add_expenses(project, config['expenses'])
 
-        # Add payments using partner and expense references
-        ProjectFactory._add_payments(project, config['payments'], partners, expenses)
+        # Add sales (optional)
+        if 'sales' in config and config['sales']:
+            ProjectFactory._add_sales(project, config['sales'])
+
+        # Add payments using partner and expense references (optional)
+        if 'payments' in config and config['payments']:
+            ProjectFactory._add_payments(project, config['payments'], partners, expenses)
 
         return project
 
@@ -101,6 +110,30 @@ class ProjectFactory:
             expenses[description] = expense
 
         return expenses
+
+    @staticmethod
+    def _add_sales(project: CrowdfundingProject, sales_config: list) -> Dict[str, Any]:
+        """
+        Add sales to the project and return a lookup dictionary.
+
+        Args:
+            project: CrowdfundingProject instance to add sales to
+            sales_config: List of sales configurations
+
+        Returns:
+            Dictionary mapping sale descriptions to Sale instances
+        """
+        sales = {}
+
+        for sale_config in sales_config:
+            description = sale_config['description']
+            amount = ExpressionEvaluator.evaluate_amount(sale_config['amount'])
+            date = datetime.strptime(sale_config['date'], '%Y-%m-%d')
+
+            sale = project.add_sale(amount, date, description)
+            sales[description] = sale
+
+        return sales
 
     @staticmethod
     def _add_payments(project: CrowdfundingProject, payments_config: list,

@@ -1,0 +1,51 @@
+# Complete Configuration with All Optional Sections
+# This demonstrates the full capability with partners, expenses, payments, and sales
+
+project:
+  name: "Complete Test Project"
+  start_date: "2025-01-01"
+  end_date: "2025-12-31"
+
+partners:
+  - name: "Primary Investor"
+    investment_amount: "800000 + 200000"  # 1,000,000
+  - name: "Secondary Investor"
+    investment_amount: 600000
+  - name: "Tertiary Investor"
+    investment_amount: "200000 + 150000 + 50000"  # 400,000
+
+expenses:
+  - description: "Land Purchase"
+    amount: "900000 + 100000"  # 1,000,000
+    date: "2025-02-01"
+  - description: "Construction Materials"
+    amount: "300000 + 200000"  # 500,000
+    date: "2025-03-15"
+  - description: "Labor Costs"
+    amount: 250000
+    date: "2025-04-20"
+
+payments:
+  - amount: "600000 + 400000"  # 1,000,000
+    date: "2025-02-01"
+    partner: "Primary Investor"
+    expense: "Land Purchase"
+  - amount: "300000 + 200000"  # 500,000
+    date: "2025-03-15"
+    partner: "Secondary Investor"
+    expense: "Construction Materials"
+  - amount: 250000
+    date: "2025-04-20"
+    partner: "Tertiary Investor"
+    expense: "Labor Costs"
+
+sales:
+  - description: "Property Sale Unit 1"
+    amount: "1800000 + 200000"  # 2,000,000
+    date: "2025-11-15"
+  - description: "Property Sale Unit 2"
+    amount: "1600000 + 400000"  # 2,000,000
+    date: "2025-12-10"
+  - description: "Commercial Lease Revenue"
+    amount: "120000 + 80000"  # 200,000
+    date: "2025-12-20"

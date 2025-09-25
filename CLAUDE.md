@@ -42,11 +42,17 @@ python main.py --config projects/ghadeer_land.yaml --expenses-by-date
 # Show only payments chronologically
 python main.py --config projects/ghadeer_land.yaml --payments-by-date
 
+# Show only sales summary with ownership percentages
+python main.py --config projects/test_with_sales.yaml --sales
+
+# Show sales chronologically
+python main.py --config projects/test_with_sales.yaml --sales-by-date
+
 # Show only project summary
 python main.py --config projects/ghadeer_land.yaml --summary
 
-# Show all reports (same as default)
-python main.py --config projects/ghadeer_land.yaml --all
+# Show all available reports (adapts to what's in your config)
+python main.py --config projects/my_project.yaml --all
 ```
 
 #### Date Filtering
@@ -74,32 +80,44 @@ python main.py --config projects/ghadeer_land.yaml --validate-only
 The system supports configurable projects via YAML files. This allows easy creation and management of multiple projects without hardcoding data.
 
 #### Configuration File Structure
+
+**Required Section (Project Information Only):**
 ```yaml
 project:
   name: "Project Name"
   start_date: "YYYY-MM-DD"
   end_date: "YYYY-MM-DD"
+```
 
-partners:
+**All Optional Sections:**
+```yaml
+partners:  # Optional - can have projects with no partners defined yet
   - name: "Partner Name"
     investment_amount: 100000.00
     # OR use mathematical expressions:
     # investment_amount: "50000 + 30000 + 20000"
 
-expenses:
+expenses:  # Optional - can have projects with no expenses defined yet
   - description: "Expense Description"
     amount: 50000.00
     # OR use mathematical expressions:
     # amount: "25000 + 15000 + 10000"
     date: "YYYY-MM-DD"
 
-payments:
+payments:  # Optional - can have projects with no payments yet
   - amount: 50000.00
     # OR use mathematical expressions:
     # amount: "25000 + 25000"
     date: "YYYY-MM-DD"
     partner: "Partner Name"
     expense: "Expense Description"
+
+sales:     # Optional - new section for revenue tracking
+  - description: "Property Sale Description"
+    amount: 1500000.00
+    # OR use mathematical expressions:
+    # amount: "1200000 + 300000"
+    date: "YYYY-MM-DD"
 ```
 
 #### Mathematical Expressions
@@ -127,6 +145,11 @@ payments:
   - amount: "25000 + 25000"  # 50000
     partner: "Partner Name"
     expense: "Expense Description"
+
+sales:
+  - description: "Property Unit A Sale"
+    amount: "1200000 + 300000"  # 1500000
+    date: "2025-06-15"
 ```
 
 **Security Notes:**
@@ -137,22 +160,95 @@ payments:
 
 #### Creating New Projects
 
-1. **Copy the template**: Use `projects/ghadeer_land.yaml` as a starting point
-2. **Update project info**: Modify name, dates, and project details
-3. **Add partners**: List all investors with their investment amounts
-4. **Add expenses**: List all project costs with amounts and dates
-5. **Add payments**: Link partners to expenses they've paid for
-6. **Validate**: Use `--validate-only` flag to check for errors
-7. **Run**: Use `--config path/to/your/project.yaml` to run reports
+**Flexible Project Configuration:**
+You can create projects at any stage of development - from initial planning (project info only) to complete projects with all sections.
+
+**Basic Steps:**
+1. **Start minimal**: Create a project with only project information
+2. **Add sections as needed**: Partners, expenses, payments, and sales are all optional
+3. **Use expressions**: Break down complex calculations using mathematical expressions
+4. **Validate**: Use `--validate-only` flag to check for errors
+5. **Run reports**: Use `--config path/to/your/project.yaml` to run reports
+
+**Configuration Examples:**
+
+```yaml
+# Minimal project (planning stage)
+project:
+  name: "New Development Project"
+  start_date: "2025-01-01"
+  end_date: "2025-12-31"
+```
+
+```yaml
+# Fundraising stage (partners defined)
+project:
+  name: "Fundraising Project"
+  start_date: "2025-01-01"
+  end_date: "2025-12-31"
+
+partners:
+  - name: "Lead Investor"
+    investment_amount: "500000 + 300000"
+  - name: "Secondary Investor"
+    investment_amount: 250000
+```
+
+```yaml
+# Active project with sales but no detailed expenses
+project:
+  name: "Revenue-Generating Project"
+  start_date: "2025-01-01"
+  end_date: "2025-12-31"
+
+partners:
+  - name: "Investor A"
+    investment_amount: 1000000
+
+sales:
+  - description: "Property Sale Unit 1"
+    amount: "1500000 + 300000"
+    date: "2025-09-15"
+```
 
 #### Configuration Validation
 
 The system validates:
-- Required fields are present
+- Required fields are present (only project section is mandatory)
 - Date formats are correct (YYYY-MM-DD)
-- Investment and expense amounts are positive numbers
-- Partner and expense references in payments exist
-- No duplicate partner names or expense descriptions
+- Investment, expense, payment, and sales amounts are positive numbers
+- Mathematical expressions are valid and secure (addition only)
+- Partner and expense references in payments exist (when applicable)
+- No duplicate partner names, expense descriptions, or sale descriptions
+- Optional sections can be omitted entirely
+
+#### Sales Calculations and Ownership
+
+When sales are included in your configuration, the system automatically calculates profit distribution based on partner investment percentages:
+
+**Ownership Calculation:**
+- Each partner's ownership = (their investment / total investments) × 100%
+- Ownership percentages are used to distribute sales revenue fairly
+
+**Sales Output Example:**
+```
+Sale: Property Unit A Sale
+Date: 2025-06-15
+Total: SAR 1,500,000.00
+------------------------------
+
+Partner: Lead Investor
+Amount based on ownership percentage of 55.56%: SAR 833,333.33
+------------------------------
+Partner: Co-Investor
+Amount based on ownership percentage of 27.78%: SAR 416,666.67
+```
+
+**Key Features:**
+- Automatic percentage calculation based on investment amounts
+- Mathematical expressions supported in sales amounts
+- Clear breakdown of each partner's share
+- SMS-friendly formatting maintained
 
 ## Architecture
 

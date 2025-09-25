@@ -1,0 +1,10 @@
+# Minimal Project Configuration - Only Required Project Information
+# This demonstrates the minimum viable configuration with just project details
+
+project:
+  name: "Minimal Test Project"
+  start_date: "2025-01-01"
+  end_date: "2025-12-31"
+
+# No partners, expenses, payments, or sales sections
+# This tests the optional nature of all sections except project info

@@ -438,22 +438,23 @@ class CrowdfundingProject:
 
         :return: None
         """
-        print(encapsulate_as_text_header("Sales Summary"))
+        print(encapsulate_as_text_header("💰 SALES SUMMARY"))
         sales_summary = self.get_sale_summary()
         partner_summary = self.get_partner_summary()
 
         for sale, details in sales_summary.items():
-            print(f"Sale: {sale}")
-            print(f"Date: {details['date']}")
-            print(f"Total: SAR {details['total']:,.2f}")
+            print(f"🏢 {sale}")
+            print(f"📅 {details['date']}")
+            print(f"💵 Total Revenue: {format_currency(details['total'])}")
             print(separator())
             print()
 
+            print("📊 Ownership Distribution:")
             for name, partner_details in partner_summary.items():
                 ownership_percentage = partner_details['ownership_percentage']
                 amount = details['total'] * ownership_percentage / 100
-                print(f"Partner: {name}")
-                print(f"Amount based on ownership percentage of {ownership_percentage:,.2f} % : SAR {amount:,.2f}")
+                print(f"👤 {name}")
+                print(f"📈 {ownership_percentage:,.2f}% ownership → {format_currency(amount)}")
                 print(separator())
             print()
 

@@ -21,6 +21,7 @@ class ConfigLoader:
     REQUIRED_PARTNER_FIELDS = ['name', 'investment_amount']
     REQUIRED_EXPENSE_FIELDS = ['description', 'amount', 'date']
     REQUIRED_PAYMENT_FIELDS = ['amount', 'date', 'partner', 'expense']
+    REQUIRED_SALE_FIELDS = ['description', 'amount', 'date']
 
     @staticmethod
     def load_config(config_path: str) -> Dict[str, Any]:
@@ -66,23 +67,31 @@ class ConfigLoader:
         if not isinstance(config, dict):
             raise ConfigValidationError("Configuration must be a dictionary")
 
-        # Validate top-level sections
-        required_sections = ['project', 'partners', 'expenses', 'payments']
-        for section in required_sections:
-            if section not in config:
-                raise ConfigValidationError(f"Missing required section: {section}")
+        # Validate top-level sections - only project is required
+        if 'project' not in config:
+            raise ConfigValidationError("Missing required section: project")
 
-        # Validate project section
+        # Optional sections
+        optional_sections = ['partners', 'expenses', 'payments', 'sales']
+
+        # Validate project section (required)
         ConfigLoader._validate_project(config['project'])
 
-        # Validate partners section
-        ConfigLoader._validate_partners(config['partners'])
+        # Validate optional sections only if they exist
+        if 'partners' in config:
+            ConfigLoader._validate_partners(config['partners'])
 
-        # Validate expenses section
-        ConfigLoader._validate_expenses(config['expenses'])
+        if 'expenses' in config:
+            ConfigLoader._validate_expenses(config['expenses'])
 
-        # Validate payments section
-        ConfigLoader._validate_payments(config['payments'], config['partners'], config['expenses'])
+        if 'sales' in config:
+            ConfigLoader._validate_sales(config['sales'])
+
+        if 'payments' in config:
+            # For payments validation, we need to check if referenced sections exist
+            partners_config = config.get('partners', [])
+            expenses_config = config.get('expenses', [])
+            ConfigLoader._validate_payments(config['payments'], partners_config, expenses_config)
 
     @staticmethod
     def _validate_project(project: Dict[str, Any]) -> None:
@@ -111,8 +120,9 @@ class ConfigLoader:
         if not isinstance(partners, list):
             raise ConfigValidationError("Partners section must be a list")
 
+        # Empty partners list is now allowed
         if not partners:
-            raise ConfigValidationError("At least one partner is required")
+            return
 
         partner_names = set()
         for i, partner in enumerate(partners):
@@ -145,8 +155,9 @@ class ConfigLoader:
         if not isinstance(expenses, list):
             raise ConfigValidationError("Expenses section must be a list")
 
+        # Empty expenses list is now allowed
         if not expenses:
-            raise ConfigValidationError("At least one expense is required")
+            return
 
         expense_descriptions = set()
         for i, expense in enumerate(expenses):
@@ -186,8 +197,9 @@ class ConfigLoader:
         if not isinstance(payments, list):
             raise ConfigValidationError("Payments section must be a list")
 
+        # Empty payments list is now allowed
         if not payments:
-            raise ConfigValidationError("At least one payment is required")
+            return
 
         # Create lookup sets for validation
         partner_names = {p['name'] for p in partners}
@@ -226,3 +238,44 @@ class ConfigLoader:
             expense_description = payment['expense']
             if expense_description not in expense_descriptions:
                 raise ConfigValidationError(f"Payment {i + 1} references unknown expense: {expense_description}")
+
+    @staticmethod
+    def _validate_sales(sales: List[Dict[str, Any]]) -> None:
+        """Validate sales configuration section"""
+        if not isinstance(sales, list):
+            raise ConfigValidationError("Sales section must be a list")
+
+        # Empty sales list is allowed
+        if not sales:
+            return
+
+        sale_descriptions = set()
+        for i, sale in enumerate(sales):
+            if not isinstance(sale, dict):
+                raise ConfigValidationError(f"Sale {i + 1} must be a dictionary")
+
+            for field in ConfigLoader.REQUIRED_SALE_FIELDS:
+                if field not in sale:
+                    raise ConfigValidationError(f"Sale {i + 1} missing required field: {field}")
+
+            # Check for duplicate descriptions
+            description = sale['description']
+            if description in sale_descriptions:
+                raise ConfigValidationError(f"Duplicate sale description: {description}")
+            sale_descriptions.add(description)
+
+            # Validate amount (support expressions)
+            try:
+                amount = ExpressionEvaluator.evaluate_amount(sale['amount'])
+                if amount <= 0:
+                    raise ConfigValidationError(f"Sale '{description}' amount must be positive")
+            except ExpressionEvaluationError as e:
+                raise ConfigValidationError(f"Sale '{description}' amount error: {e}")
+            except (ValueError, TypeError):
+                raise ConfigValidationError(f"Sale '{description}' amount must be a number or expression")
+
+            # Validate date
+            try:
+                datetime.strptime(sale['date'], '%Y-%m-%d')
+            except ValueError:
+                raise ConfigValidationError(f"Sale '{description}' has invalid date format (use YYYY-MM-DD)")
