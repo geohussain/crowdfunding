@@ -1,0 +1,372 @@
+# Ghadeer Land Crowdfunding Project Configuration (With Mathematical Expressions)
+# This file demonstrates the mathematical expression feature for calculating amounts
+
+project:
+  name: "Ghadeer Land"
+  start_date: "2024-07-22"
+  end_date: "2025-07-22"
+
+partners:
+  - name: "Hussain AlSalim"
+    investment_amount: 1000000
+  - name: "Ali AlFaraj"
+    investment_amount: 500000.40
+  - name: "Saleh AlNasser"
+    investment_amount: "440000 + 690"
+  - name: "Ali AlDawood"
+    # This demonstrates the mathematical expression capability
+    # Breaking down Ali AlDawood's investment into the actual components from the original calculation
+    investment_amount: "205481 + 221.60 + 703 + 400 + 920 + 394 +
+      9774.93 + 4715.88 + 330 + 8625 + 4286.35 + 6374 +
+      5222 + 80000 + 35000 + 100000 + 37651 + 1955 + 20368 + 10580 +
+      11902.50 + 4036.50 + 1955 + 500 + 174.02 + 255 + 20000 +
+      20000 + 598 + 50000 + 50000 + 2196.50 + 20400 + 1727.88 + 20000 + 8000"
+  - name: "Mohammed AlHawaj"
+    investment_amount: 120000
+
+expenses:
+  # Initial land acquisition expenses
+  - description: "Land Price from Auction"
+    amount: 1885908
+    date: "2024-07-22"
+  - description: "Price Increase after Auction"
+    amount: 178102
+    date: "2024-07-22"
+  - description: "Auction Agent Fees"
+    amount: 54221
+    date: "2024-07-22"
+  - description: "VAT"
+    amount: 94295.40
+    date: "2024-07-22"
+  - description: "Agent Fees"
+    amount: 52955
+    date: "2024-07-22"
+
+  # Legal and administrative fees
+  - description: "Lawyer Land Buying Fee"
+    amount: 690
+    date: "2024-08-18"
+  - description: "Land Split Fees"
+    amount: 221.60
+    date: "2024-11-04"
+  - description: "Land Split Fees order"
+    amount: 703
+    date: "2024-12-18"
+  - description: "Land Split Two Lands"
+    amount: 400
+    date: "2024-12-29"
+  - description: "Land Report Fees"
+    amount: 920
+    date: "2025-02-06"
+  - description: "Land Report Fees - Sadad Balady"
+    amount: 394
+    date: "2025-02-11"
+  - description: "Area Report Fees - Land One"
+    amount: 330
+    date: "2025-02-18"
+
+  # Construction insurance and licenses
+  - description: "Construction Insurance - Land One - Part One"
+    amount: 9774.93
+    date: "2025-02-16"
+  - description: "Construction Insurance - Land One - Part Two"
+    amount: 4715.88
+    date: "2025-02-16"
+  - description: "Construction Insurance - Land Two - Part One"
+    amount: 8625
+    date: "2025-03-10"
+  - description: "Construction Insurance - Land Two - Part Two"
+    amount: 4286.35
+    date: "2025-03-10"
+  - description: "Building License Fee - Land One"
+    amount: 5222
+    date: "2025-05-02"
+  - description: "Building License Fee - Land Two"
+    amount: 6374
+    date: "2025-04-21"
+
+  # Construction and development expenses
+  - description: "Blueprints Fees"
+    amount: "50000 + 30000"  # Example of expression in expense
+    date: "2025-05-25"
+  - description: "Land One Fill"
+    amount: 35000
+    date: "2025-06-04"
+  - description: "Cementing Fees #1"
+    amount: 100000
+    date: "2025-06-12"
+  - description: "Land One Sand Fill"
+    amount: 20400
+    date: "2025-08-22"
+  - description: "Land One Second Land Fill"
+    amount: 8000
+    date: "2025-09-17"
+
+  # Materials and supplies (showing some as expressions)
+  - description: "Base Steel Bars Fees"
+    amount: 37651
+    date: "2025-06-21"
+  - description: "Base Concrete Blocks Fees"
+    amount: 1955
+    date: "2025-06-21"
+  - description: "Plastic Cover Fees #1"
+    amount: 147.20
+    date: "2025-06-21"
+  - description: "Plastic Cover Fees #2"
+    amount: 220.80
+    date: "2025-06-21"
+  - description: "Deformed Steel Bars Fees"
+    amount: 10580
+    date: "2025-06-23"
+  - description: "Base Steel Bars Fees #2"
+    amount: 11902.50
+    date: "2025-06-25"
+  - description: "Base Concrete Blocks Fees #2"
+    amount: 4036.50
+    date: "2025-07-23"
+  - description: "Base Concrete Blocks Fees #3"
+    amount: 1955
+    date: "2025-07-29"
+  - description: "Base Concrete Blocks Fees #4"
+    amount: 598
+    date: "2025-07-30"
+  - description: "Concrete Blocks Top Up"
+    amount: 50000
+    date: "2025-07-31"
+  - description: "Steel Bars Top Up"
+    amount: 50000
+    date: "2025-07-31"
+  - description: "Black Tar"
+    amount: 2196.50
+    date: "2025-08-04"
+  - description: "Plumbing Supplies #1"
+    amount: 1727.88
+    date: "2025-08-31"
+  - description: "Plumbing Supplies Wallet"
+    amount: "10000 + 10000"  # Another example of expression
+    date: "2025-09-03"
+
+  # Contracting payments
+  - description: "Contracting Payment Fees #1"
+    amount: 20000
+    date: "2025-06-21"
+  - description: "Contracting Payment Fees #2"
+    amount: 20000
+    date: "2025-07-29"
+  - description: "Contracting Payment Fees #3"
+    amount: 20000
+    date: "2025-07-29"
+
+  # Miscellaneous expenses
+  - description: "Misc Fee #1"
+    amount: 500
+    date: "2025-07-29"
+  - description: "Misc Fee #2"
+    amount: 174.02
+    date: "2025-07-29"
+  - description: "Misc Fee #3"
+    amount: 255
+    date: "2025-07-29"
+
+payments:
+  # Initial payments
+  - amount: 52955
+    date: "2024-07-22"
+    partner: "Hussain AlSalim"
+    expense: "Agent Fees"
+  - amount: 94295.40
+    date: "2024-07-23"
+    partner: "Ali AlFaraj"
+    expense: "VAT"
+  - amount: 947045
+    date: "2024-07-24"
+    partner: "Hussain AlSalim"
+    expense: "Land Price from Auction"
+  - amount: 120000
+    date: "2024-07-28"
+    partner: "Mohammed AlHawaj"
+    expense: "Land Price from Auction"
+  - amount: 205481
+    date: "2024-07-28"
+    partner: "Ali AlDawood"
+    expense: "Land Price from Auction"
+  - amount: 405705
+    date: "2024-08-15"
+    partner: "Ali AlFaraj"
+    expense: "Land Price from Auction"
+  - amount: 207677
+    date: "2024-08-15"
+    partner: "Saleh AlNasser"
+    expense: "Land Price from Auction"
+  - amount: 178102
+    date: "2024-08-15"
+    partner: "Saleh AlNasser"
+    expense: "Price Increase after Auction"
+  - amount: 54221
+    date: "2024-08-15"
+    partner: "Saleh AlNasser"
+    expense: "Auction Agent Fees"
+  - amount: 690
+    date: "2024-08-18"
+    partner: "Saleh AlNasser"
+    expense: "Lawyer Land Buying Fee"
+
+  # Legal and administrative payments
+  - amount: 221.60
+    date: "2024-11-04"
+    partner: "Ali AlDawood"
+    expense: "Land Split Fees"
+  - amount: 703
+    date: "2024-12-18"
+    partner: "Ali AlDawood"
+    expense: "Land Split Fees order"
+  - amount: 400
+    date: "2024-12-29"
+    partner: "Ali AlDawood"
+    expense: "Land Split Two Lands"
+  - amount: 920
+    date: "2025-02-06"
+    partner: "Ali AlDawood"
+    expense: "Land Report Fees"
+  - amount: 394
+    date: "2025-02-11"
+    partner: "Ali AlDawood"
+    expense: "Land Report Fees - Sadad Balady"
+  - amount: 330
+    date: "2025-02-18"
+    partner: "Ali AlDawood"
+    expense: "Area Report Fees - Land One"
+
+  # Insurance and license payments
+  - amount: 9774.93
+    date: "2025-02-16"
+    partner: "Ali AlDawood"
+    expense: "Construction Insurance - Land One - Part One"
+  - amount: 4715.88
+    date: "2025-02-16"
+    partner: "Ali AlDawood"
+    expense: "Construction Insurance - Land One - Part Two"
+  - amount: 8625
+    date: "2025-03-10"
+    partner: "Ali AlDawood"
+    expense: "Construction Insurance - Land Two - Part One"
+  - amount: 4286.35
+    date: "2025-03-10"
+    partner: "Ali AlDawood"
+    expense: "Construction Insurance - Land Two - Part Two"
+  - amount: 6374
+    date: "2025-04-21"
+    partner: "Ali AlDawood"
+    expense: "Building License Fee - Land Two"
+  - amount: 5222
+    date: "2025-05-02"
+    partner: "Ali AlDawood"
+    expense: "Building License Fee - Land One"
+
+  # Development and construction payments
+  - amount: "50000 + 30000"  # Expression in payment amount
+    date: "2025-05-25"
+    partner: "Ali AlDawood"
+    expense: "Blueprints Fees"
+  - amount: 35000
+    date: "2025-06-04"
+    partner: "Ali AlDawood"
+    expense: "Land One Fill"
+  - amount: 100000
+    date: "2025-06-12"
+    partner: "Ali AlDawood"
+    expense: "Cementing Fees #1"
+  - amount: 20400
+    date: "2025-08-22"
+    partner: "Ali AlDawood"
+    expense: "Land One Sand Fill"
+  - amount: 8000
+    date: "2025-09-17"
+    partner: "Ali AlDawood"
+    expense: "Land One Second Land Fill"
+
+  # Materials payments
+  - amount: 37651
+    date: "2025-06-21"
+    partner: "Ali AlDawood"
+    expense: "Base Steel Bars Fees"
+  - amount: 1955
+    date: "2025-06-21"
+    partner: "Ali AlDawood"
+    expense: "Base Concrete Blocks Fees"
+  - amount: 147.20
+    date: "2025-06-21"
+    partner: "Ali AlDawood"
+    expense: "Plastic Cover Fees #1"
+  - amount: 220.80
+    date: "2025-06-21"
+    partner: "Ali AlDawood"
+    expense: "Plastic Cover Fees #2"
+  - amount: 10580
+    date: "2025-06-23"
+    partner: "Ali AlDawood"
+    expense: "Deformed Steel Bars Fees"
+  - amount: 11902.50
+    date: "2025-06-25"
+    partner: "Ali AlDawood"
+    expense: "Base Steel Bars Fees #2"
+  - amount: 4036.50
+    date: "2025-07-23"
+    partner: "Ali AlDawood"
+    expense: "Base Concrete Blocks Fees #2"
+  - amount: 1955
+    date: "2025-07-29"
+    partner: "Ali AlDawood"
+    expense: "Base Concrete Blocks Fees #3"
+  - amount: 598
+    date: "2025-07-30"
+    partner: "Ali AlDawood"
+    expense: "Base Concrete Blocks Fees #4"
+  - amount: 50000
+    date: "2025-07-31"
+    partner: "Ali AlDawood"
+    expense: "Concrete Blocks Top Up"
+  - amount: 50000
+    date: "2025-07-31"
+    partner: "Ali AlDawood"
+    expense: "Steel Bars Top Up"
+  - amount: 2196.50
+    date: "2025-08-04"
+    partner: "Ali AlDawood"
+    expense: "Black Tar"
+  - amount: 1727.88
+    date: "2025-08-31"
+    partner: "Ali AlDawood"
+    expense: "Plumbing Supplies #1"
+  - amount: "10000 + 10000"  # Expression in payment amount
+    date: "2025-09-03"
+    partner: "Ali AlDawood"
+    expense: "Plumbing Supplies Wallet"
+
+  # Contracting payments
+  - amount: 20000
+    date: "2025-06-21"
+    partner: "Ali AlDawood"
+    expense: "Contracting Payment Fees #1"
+  - amount: 20000
+    date: "2025-07-29"
+    partner: "Ali AlDawood"
+    expense: "Contracting Payment Fees #2"
+  - amount: 20000
+    date: "2025-07-29"
+    partner: "Ali AlDawood"
+    expense: "Contracting Payment Fees #3"
+
+  # Miscellaneous payments
+  - amount: 500
+    date: "2025-07-29"
+    partner: "Ali AlDawood"
+    expense: "Misc Fee #1"
+  - amount: 174.02
+    date: "2025-07-29"
+    partner: "Ali AlDawood"
+    expense: "Misc Fee #2"
+  - amount: 255
+    date: "2025-07-29"
+    partner: "Ali AlDawood"
+    expense: "Misc Fee #3"
