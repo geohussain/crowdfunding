@@ -18,7 +18,8 @@ partners:
       9774.93 + 4715.88 + 330 + 8625 + 4286.35 + 6374 +
       5222 + 80000 + 35000 + 100000 + 37651 + 1955 + 20368 + 10580 +
       11902.50 + 4036.50 + 1955 + 500 + 174.02 + 255 + 20000 +
-      20000 + 598 + 50000 + 50000 + 2196.50 + 20400 + 1727.88 + 20000 + 8000"
+      20000 + 598 + 50000 + 50000 + 2196.50 + 20400 + 1727.88 + 20000
+      + 8000 + 40636.50"
   - name: "Mohammed AlHawaj"
     investment_amount: 120000
 
@@ -143,6 +144,9 @@ expenses:
   - description: "Plumbing Supplies Wallet"
     amount: 20000
     date: "2025-09-03"
+  - description: "Various Building Material Fees"
+    amount: "15 + 55 + 57.50 + 70 + 169 + 300 + 320 + 600 + 600 + 600 + 2850"
+    date: "2025-09-29"
 
   # Contracting payments
   - description: "Contracting Payment Fees #1"
@@ -154,6 +158,12 @@ expenses:
   - description: "Contracting Payment Fees #3"
     amount: 20000
     date: "2025-07-29"
+  - description: "Contracting Payment Fees #4"
+    amount: 20000
+    date: "2025-09-29"
+  - description: "Contracting Payment Fees #5"
+    amount: 25000
+    date: "2025-09-29"
 
   # Miscellaneous expenses
   - description: "Misc Fee #1"
@@ -340,6 +350,10 @@ payments:
     date: "2025-09-03"
     partner: "Ali AlDawood"
     expense: "Plumbing Supplies Wallet"
+  - expense: "Various Building Material Fees"
+    partner: "Ali AlDawood"
+    amount: "15 + 55 + 57.50 + 70 + 169 + 300 + 320 + 600 + 600 + 600 + 2850"
+    date: "2025-10-02"
 
   # Contracting payments
   - amount: 20000
@@ -354,6 +368,14 @@ payments:
     date: "2025-07-29"
     partner: "Ali AlDawood"
     expense: "Contracting Payment Fees #3"
+  - amount: 20000
+    date: "2025-10-02"
+    partner: "Ali AlDawood"
+    expense: "Contracting Payment Fees #4"
+  - amount: 15000
+    date: "2025-10-02"
+    partner: "Ali AlDawood"
+    expense: "Contracting Payment Fees #5"
 
   # Miscellaneous payments
   - amount: 500

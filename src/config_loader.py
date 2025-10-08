@@ -20,7 +20,7 @@ class ConfigLoader:
     REQUIRED_PROJECT_FIELDS = ['name', 'start_date', 'end_date']
     REQUIRED_PARTNER_FIELDS = ['name', 'investment_amount']
     REQUIRED_EXPENSE_FIELDS = ['description', 'amount', 'date']
-    REQUIRED_PAYMENT_FIELDS = ['amount', 'date', 'partner', 'expense']
+    REQUIRED_PAYMENT_BASE_FIELDS = ['amount', 'date', 'expense']  # 'partner' is conditionally required
     REQUIRED_SALE_FIELDS = ['description', 'amount', 'date']
 
     @staticmethod
@@ -91,7 +91,8 @@ class ConfigLoader:
             # For payments validation, we need to check if referenced sections exist
             partners_config = config.get('partners', [])
             expenses_config = config.get('expenses', [])
-            ConfigLoader._validate_payments(config['payments'], partners_config, expenses_config)
+            sales_config = config.get('sales', [])
+            ConfigLoader._validate_payments(config['payments'], partners_config, expenses_config, sales_config)
 
     @staticmethod
     def _validate_project(project: Dict[str, Any]) -> None:
@@ -192,7 +193,7 @@ class ConfigLoader:
 
     @staticmethod
     def _validate_payments(payments: List[Dict[str, Any]], partners: List[Dict[str, Any]],
-                          expenses: List[Dict[str, Any]]) -> None:
+                          expenses: List[Dict[str, Any]], sales: List[Dict[str, Any]]) -> None:
         """Validate payments configuration section"""
         if not isinstance(payments, list):
             raise ConfigValidationError("Payments section must be a list")
@@ -205,13 +206,40 @@ class ConfigLoader:
         partner_names = {p['name'] for p in partners}
         expense_descriptions = {e['description'] for e in expenses}
 
+        # Get earliest sale date for chronological validation
+        earliest_sale_date = None
+        if sales:
+            sale_dates = [datetime.strptime(s['date'], '%Y-%m-%d') for s in sales]
+            earliest_sale_date = min(sale_dates) if sale_dates else None
+
         for i, payment in enumerate(payments):
             if not isinstance(payment, dict):
                 raise ConfigValidationError(f"Payment {i + 1} must be a dictionary")
 
-            for field in ConfigLoader.REQUIRED_PAYMENT_FIELDS:
+            # Check base required fields
+            for field in ConfigLoader.REQUIRED_PAYMENT_BASE_FIELDS:
                 if field not in payment:
                     raise ConfigValidationError(f"Payment {i + 1} missing required field: {field}")
+
+            # Get from_sales flag (default to False for backwards compatibility)
+            from_sales = payment.get('from_sales', False)
+
+            # Validate from_sales is boolean
+            if not isinstance(from_sales, bool):
+                raise ConfigValidationError(f"Payment {i + 1} 'from_sales' must be a boolean (true/false)")
+
+            # Validate partner field based on from_sales
+            if from_sales:
+                if 'partner' in payment:
+                    raise ConfigValidationError(f"Payment {i + 1} with from_sales=true cannot have a 'partner' field")
+            else:
+                if 'partner' not in payment:
+                    raise ConfigValidationError(f"Payment {i + 1} missing required field: partner (or set from_sales=true)")
+
+                # Validate partner reference
+                partner_name = payment['partner']
+                if partner_name not in partner_names:
+                    raise ConfigValidationError(f"Payment {i + 1} references unknown partner: {partner_name}")
 
             # Validate amount (support expressions)
             try:
@@ -225,19 +253,24 @@ class ConfigLoader:
 
             # Validate date
             try:
-                datetime.strptime(payment['date'], '%Y-%m-%d')
+                payment_date = datetime.strptime(payment['date'], '%Y-%m-%d')
             except ValueError:
                 raise ConfigValidationError(f"Payment {i + 1} has invalid date format (use YYYY-MM-DD)")
-
-            # Validate partner reference
-            partner_name = payment['partner']
-            if partner_name not in partner_names:
-                raise ConfigValidationError(f"Payment {i + 1} references unknown partner: {partner_name}")
 
             # Validate expense reference
             expense_description = payment['expense']
             if expense_description not in expense_descriptions:
                 raise ConfigValidationError(f"Payment {i + 1} references unknown expense: {expense_description}")
+
+            # Chronological warning for sales reinvestments
+            if from_sales and earliest_sale_date and payment_date < earliest_sale_date:
+                import warnings
+                warnings.warn(
+                    f"WARNING: Payment {i + 1} (from sales) is dated {payment['date']} "
+                    f"but the earliest sale is dated {earliest_sale_date.strftime('%Y-%m-%d')}. "
+                    f"This will create negative sales balance until sales occur.",
+                    UserWarning
+                )
 
     @staticmethod
     def _validate_sales(sales: List[Dict[str, Any]]) -> None:

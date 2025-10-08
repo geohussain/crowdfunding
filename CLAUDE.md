@@ -105,12 +105,19 @@ expenses:  # Optional - can have projects with no expenses defined yet
     date: "YYYY-MM-DD"
 
 payments:  # Optional - can have projects with no payments yet
+  # Partner payment (from partner investment)
   - amount: 50000.00
     # OR use mathematical expressions:
     # amount: "25000 + 25000"
     date: "YYYY-MM-DD"
     partner: "Partner Name"
     expense: "Expense Description"
+
+  # Sales reinvestment (payment from sales revenue)
+  - amount: 30000.00
+    date: "YYYY-MM-DD"
+    expense: "Another Expense"
+    from_sales: true  # No partner field when from_sales is true
 
 sales:     # Optional - new section for revenue tracking
   - description: "Property Sale Description"
@@ -221,6 +228,10 @@ The system validates:
 - Partner and expense references in payments exist (when applicable)
 - No duplicate partner names, expense descriptions, or sale descriptions
 - Optional sections can be omitted entirely
+- Payments with `from_sales: true` do not have a `partner` field
+- Payments with `from_sales: true` reference a valid expense
+- Total payments to an expense do not exceed the expense amount (over-payment prevention)
+- Chronological warnings if reinvestments are dated before sales exist
 
 #### Sales Calculations and Ownership
 
@@ -249,6 +260,89 @@ Amount based on ownership percentage of 27.78%: SAR 416,666.67
 - Mathematical expressions supported in sales amounts
 - Clear breakdown of each partner's share
 - SMS-friendly formatting maintained
+
+#### Sales Reinvestment Feature
+
+The system supports **sales reinvestment**, allowing you to pay for project expenses using revenue from sales instead of (or in addition to) partner investments.
+
+**How It Works:**
+- Payments can come from two sources: partner investments or sales revenue
+- When paying from sales revenue, use `from_sales: true` in the payment configuration
+- Sales reinvestments reduce the **net sales** available for distribution to partners
+- Partner ownership percentages remain unchanged (based on original investments)
+- Net sales can become negative if reinvestments exceed sales revenue (creating debt)
+
+**YAML Configuration:**
+```yaml
+payments:
+  # Regular partner payment
+  - amount: 50000
+    date: "2025-03-15"
+    partner: "Ali AlDawood"
+    expense: "Land Purchase"
+
+  # Payment from sales revenue (reinvestment)
+  - amount: 30000
+    date: "2025-06-20"
+    expense: "Construction Costs"
+    from_sales: true  # No partner field required
+
+  # Mixed: same expense paid by both partner and sales
+  - amount: 20000
+    date: "2025-07-01"
+    partner: "Mohammed Hassan"
+    expense: "Construction Costs"
+```
+
+**Key Calculations:**
+- **Gross Sales** = Sum of all sales revenue
+- **Sales Reinvestments** = Sum of payments where `from_sales: true`
+- **Net Sales** = Gross Sales - Sales Reinvestments
+- **Partner Distribution** = Net Sales × Partner Ownership %
+
+**Validation Rules:**
+- ✅ Payments with `from_sales: true` **cannot** have a `partner` field
+- ✅ Payments with `from_sales: true` **must** reference a valid expense
+- ✅ Total payments to an expense cannot exceed the expense amount (over-payment prevention)
+- ⚠️ Warning issued if reinvestment is dated before any sales exist
+- ✅ Mathematical expressions supported in reinvestment amounts
+
+**Example Scenario:**
+```yaml
+sales:
+  - description: "Property Sale Unit A"
+    amount: 500000
+    date: "2025-06-01"
+
+payments:
+  # Reinvest 100,000 from sales into new construction
+  - amount: 100000
+    date: "2025-06-15"
+    expense: "Phase 2 Construction"
+    from_sales: true
+
+# Result:
+# Gross Sales: 500,000 SAR
+# Reinvestments: 100,000 SAR
+# Net Sales: 400,000 SAR
+# Each partner receives their % of 400,000 SAR (not 500,000)
+```
+
+**Zero/Negative Sales Scenarios:**
+- If no sales exist but reinvestments are configured:
+  - Gross Sales = 0
+  - Net Sales = 0 - Reinvestments = Negative (debt)
+  - Partners' shares will be negative (liability)
+- If reinvestments exceed sales revenue:
+  - Net Sales = Negative (debt scenario)
+  - Clearly indicated in reports with warning icons
+
+**Report Displays:**
+- **Sales Report**: Shows gross sales, itemized reinvestments, and net sales for distribution
+- **Expense Report**: Shows payment source breakdown (partners vs. sales)
+- **Partner Report**: Shows share of net sales (can be negative)
+- **Payments Report**: Clearly indicates if payment is from sales revenue
+- **Summary Report**: Displays gross sales, reinvestments, and net sales separately
 
 ## Architecture
 

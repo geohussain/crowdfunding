@@ -150,11 +150,16 @@ class ProjectFactory:
         for payment_config in payments_config:
             amount = ExpressionEvaluator.evaluate_amount(payment_config['amount'])
             date = datetime.strptime(payment_config['date'], '%Y-%m-%d')
-            partner_name = payment_config['partner']
             expense_description = payment_config['expense']
+            from_sales = payment_config.get('from_sales', False)
 
-            # Get partner and expense references
-            partner = partners[partner_name]
+            # Get expense reference
             expense = expenses[expense_description]
 
-            project.add_payment(amount, date, partner, expense)
+            # Get partner reference (None if from_sales=True)
+            partner = None
+            if not from_sales:
+                partner_name = payment_config['partner']
+                partner = partners[partner_name]
+
+            project.add_payment(amount, date, partner, expense, from_sales)

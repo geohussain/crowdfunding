@@ -1,0 +1,147 @@
+# Example Project: Real Estate Development with Sales Reinvestment
+# This example demonstrates the sales reinvestment feature where money from
+# sales revenue can be used to pay for project expenses.
+
+project:
+  name: "Green Valley Development - Phase 1 & 2"
+  start_date: "2025-01-01"
+  end_date: "2025-12-31"
+
+partners:
+  - name: "Ali AlDawood"
+    investment_amount: 500000
+
+  - name: "Mohammed Hassan"
+    investment_amount: 300000
+
+  - name: "Sara AlKhalifa"
+    investment_amount: 200000
+
+expenses:
+  # Phase 1 expenses (covered by partners)
+  - description: "Land Purchase"
+    amount: 400000
+    date: "2025-01-15"
+
+  - description: "Phase 1 Construction"
+    amount: 350000
+    date: "2025-02-01"
+
+  - description: "Permits and Legal Fees"
+    amount: 50000
+    date: "2025-02-10"
+
+  # Phase 2 expenses (to be covered by sales reinvestment)
+  - description: "Phase 2 Land Expansion"
+    amount: 200000
+    date: "2025-07-01"
+
+  - description: "Phase 2 Construction"
+    amount: 300000
+    date: "2025-08-01"
+
+  - description: "Marketing and Sales"
+    amount: 50000
+    date: "2025-09-01"
+
+payments:
+  # Partner payments for Phase 1
+  - amount: 200000
+    date: "2025-01-20"
+    partner: "Ali AlDawood"
+    expense: "Land Purchase"
+
+  - amount: 150000
+    date: "2025-01-22"
+    partner: "Mohammed Hassan"
+    expense: "Land Purchase"
+
+  - amount: 50000
+    date: "2025-01-25"
+    partner: "Sara AlKhalifa"
+    expense: "Land Purchase"
+
+  - amount: 175000
+    date: "2025-02-05"
+    partner: "Ali AlDawood"
+    expense: "Phase 1 Construction"
+
+  - amount: 105000
+    date: "2025-02-07"
+    partner: "Mohammed Hassan"
+    expense: "Phase 1 Construction"
+
+  - amount: 70000
+    date: "2025-02-10"
+    partner: "Sara AlKhalifa"
+    expense: "Phase 1 Construction"
+
+  - amount: 25000
+    date: "2025-02-15"
+    partner: "Ali AlDawood"
+    expense: "Permits and Legal Fees"
+
+  - amount: 15000
+    date: "2025-02-16"
+    partner: "Mohammed Hassan"
+    expense: "Permits and Legal Fees"
+
+  - amount: 10000
+    date: "2025-02-17"
+    partner: "Sara AlKhalifa"
+    expense: "Permits and Legal Fees"
+
+  # Sales reinvestments for Phase 2
+  # After Phase 1 completion, properties are sold and revenue is reinvested
+
+  - amount: 200000
+    date: "2025-07-05"
+    expense: "Phase 2 Land Expansion"
+    from_sales: true  # Paid from sales revenue
+
+  - amount: 250000
+    date: "2025-08-05"
+    expense: "Phase 2 Construction"
+    from_sales: true  # Paid from sales revenue
+
+  # Mixed payment: partial from sales, partial from partner
+  - amount: 30000
+    date: "2025-08-10"
+    partner: "Ali AlDawood"
+    expense: "Phase 2 Construction"
+
+  - amount: 20000
+    date: "2025-08-12"
+    partner: "Mohammed Hassan"
+    expense: "Phase 2 Construction"
+
+  - amount: 50000
+    date: "2025-09-05"
+    expense: "Marketing and Sales"
+    from_sales: true  # Paid from sales revenue
+
+sales:
+  - description: "Phase 1 Property Unit A"
+    amount: 600000
+    date: "2025-06-15"
+
+  - description: "Phase 1 Property Unit B"
+    amount: 550000
+    date: "2025-06-20"
+
+  - description: "Phase 1 Property Unit C"
+    amount: 500000
+    date: "2025-06-25"
+
+# Summary of this configuration:
+# - Total Partner Investments: 1,000,000 SAR
+# - Partner Ownership: Ali (50%), Mohammed (30%), Sara (20%)
+# - Phase 1 Expenses: 800,000 SAR (fully paid by partners)
+# - Phase 2 Expenses: 550,000 SAR (500,000 from sales + 50,000 from partners)
+# - Gross Sales: 1,650,000 SAR
+# - Sales Reinvestments: 500,000 SAR
+# - Net Sales: 1,150,000 SAR
+# - Net Sales Distribution:
+#   - Ali: 575,000 SAR (50%)
+#   - Mohammed: 345,000 SAR (30%)
+#   - Sara: 230,000 SAR (20%)
