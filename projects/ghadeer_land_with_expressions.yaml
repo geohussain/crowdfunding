@@ -10,7 +10,7 @@ partners:
   - name: "Hussain AlSalim"
     investment_amount: 1000000
   - name: "Ali AlFaraj"
-    investment_amount: 500000.40
+    investment_amount: "500000.40 + 100000"
   - name: "Saleh AlNasser"
     investment_amount: 440690
   - name: "Ali AlDawood"
@@ -147,6 +147,12 @@ expenses:
   - description: "Various Building Material Fees"
     amount: "15 + 55 + 57.50 + 70 + 169 + 300 + 320 + 600 + 600 + 600 + 2850"
     date: "2025-09-29"
+  - description: "Bricks Wallet"
+    amount: 30000
+    date: "2025-10-06"
+  - description: "Cementing Wallet #2"
+    amount: 70000
+    date: "2025-10-06"
 
   # Contracting payments
   - description: "Contracting Payment Fees #1"
@@ -354,6 +360,14 @@ payments:
     partner: "Ali AlDawood"
     amount: "15 + 55 + 57.50 + 70 + 169 + 300 + 320 + 600 + 600 + 600 + 2850"
     date: "2025-10-02"
+  - expense: "Bricks Wallet"
+    amount: 30000
+    date: "2025-10-06"
+    partner: "Ali AlFaraj"
+  - expense: "Cementing Wallet #2"
+    amount: 70000
+    date: "2025-10-06"
+    partner: "Ali AlFaraj"
 
   # Contracting payments
   - amount: 20000

@@ -652,8 +652,8 @@ class CrowdfundingProject:
         summary += (
             f"{separator()}\n"
             f"{balance_icon} Balance: {format_currency(self.project_balance())}\n"
-            f"📈 Gains: {gains_pct:,.1f}%\n"
-            f"{completion_icon} Complete: {completion_pct:.0f}%\n"
+            f"📈 Gains: {gains_pct:,.2f}%\n"
+            f"{completion_icon} Complete: {completion_pct:.2f}%\n"
             f"⏳ Remaining: {format_currency(remaining_expenses)}"
         )
 
