@@ -1,7 +1,6 @@
 import argparse
 import sys
 from datetime import datetime
-from pathlib import Path
 
 # Import both old and new project creation methods
 from projects.ghadeer_land import create_ghadeer_land_project
@@ -10,7 +9,38 @@ from src.config_loader import ConfigValidationError
 
 
 def create_argument_parser():
-    """Create and configure the command line argument parser"""
+    """
+    Initialize and configure the command-line argument parser for the crowdfunding project management system.
+
+    This function sets up all supported command-line arguments and options for running financial reports,
+    filtering data by date, and validating project configurations. It provides a comprehensive interface
+    for users to interact with crowdfunding project data through various reporting options.
+
+    Supported Features:
+    - Load crowdfunding projects from YAML configuration files or use default Ghadeer Land project
+    - Generate financial reports: partner ownership, expenses, payments, and sales summaries
+    - Filter reports chronologically using date-based arguments
+    - Validate configuration files before running reports
+    - Display reports individually or as a comprehensive project summary
+
+    Configuration Options:
+    - --config: Specify custom YAML configuration file path for project data
+    - --partners: Display partner ownership percentages and investment summary
+    - --expenses: Show expense totals organized by category
+    - --payments: View payment distribution across project partners
+    - --expenses-by-date: List all project expenses in chronological order
+    - --payments-by-date: View payment timeline organized by date
+    - --sales: Display property sales revenue and ownership distribution
+    - --sales-by-date: Show sales transactions chronologically
+    - --summary: Print overall project financial summary and status
+    - --all: Generate all available reports for the project
+    - --since: Filter date-based reports to show entries after specified date (YYYY-MM-DD format)
+    - --validate-only: Validate configuration file without generating reports
+
+    Returns:
+        argparse.ArgumentParser: Configured argument parser with all supported crowdfunding project options
+        and report generation flags.
+    """
     parser = argparse.ArgumentParser(
         description="Crowdfunding Project Management System",
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -207,7 +237,7 @@ def main():
     # Load project
     project = load_project(args.config)
 
-    # If validate-only flag is set, just validate and exit
+    # If the --validate-only flag is set, just validate and exit
     if args.validate_only:
         print("✅ Configuration validation passed successfully!")
         return
