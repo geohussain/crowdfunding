@@ -21,7 +21,7 @@ partners:
       20000 + 598 + 50000 + 50000 + 2196.50 + 20400 + 1727.88 + 20000
       + 8000 + 40636.50"
   - name: "Mohammed AlHawaj"
-    investment_amount: 120000
+    investment_amount: "120000 + 34030"
 
 expenses:
   # Initial land acquisition expenses
@@ -176,6 +176,9 @@ expenses:
   - description: "Contracting Payment Fees #5"
     amount: 25000
     date: "2025-09-29"
+  - description: "Contracting Payment Fees #6"
+    amount: 20000
+    date: "2025-11-10"
 
   # Miscellaneous expenses
   - description: "Misc Fee #1"
@@ -190,6 +193,12 @@ expenses:
   - description: "Misc Fee #4"
     amount: 1550
     date: "2025-10-13"
+  - description: "Misc Fee #5"
+    amount: 2480
+    date: "2025-11-10"
+  - description: "Misc Fee #6"
+    amount: 1222
+    date: "2025-11-15"
 
 payments:
   # Initial payments
@@ -407,6 +416,14 @@ payments:
     date: "2025-10-02"
     partner: "Ali AlDawood"
     expense: "Contracting Payment Fees #5"
+  - amount: 10000
+    date: "2025-11-10"
+    partner: "Mohammed AlHawaj"
+    expense: "Contracting Payment Fees #5"
+  - amount: 20000
+    date: "2025-11-10"
+    partner: "Mohammed AlHawaj"
+    expense: "Contracting Payment Fees #6"
 
   # Miscellaneous payments
   - amount: 500
@@ -421,3 +438,11 @@ payments:
     date: "2025-07-29"
     partner: "Ali AlDawood"
     expense: "Misc Fee #3"
+  - amount: 1550
+    date: "2025-11-10"
+    partner: "Mohammed AlHawaj"
+    expense: "Misc Fee #4"
+  - amount: 2480
+    date: "2025-11-10"
+    partner: "Mohammed AlHawaj"
+    expense: "Misc Fee #5"
