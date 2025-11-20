@@ -21,7 +21,7 @@ partners:
       20000 + 598 + 50000 + 50000 + 2196.50 + 20400 + 1727.88 + 20000
       + 8000 + 40636.50"
   - name: "Mohammed AlHawaj"
-    investment_amount: "120000 + 34030"
+    investment_amount: "120000 + 34030 + 329.50"
 
 expenses:
   # Initial land acquisition expenses
@@ -63,6 +63,9 @@ expenses:
   - description: "Area Report Fees - Land One"
     amount: 330
     date: "2025-02-18"
+  - description: "Land One Split Fees"
+    amount: 329.50
+    date: "2025-11-19"
 
   # Construction insurance and licenses
   - description: "Construction Insurance - Land One - Part One"
@@ -268,6 +271,10 @@ payments:
     date: "2025-02-18"
     partner: "Ali AlDawood"
     expense: "Area Report Fees - Land One"
+  - amount: 329.50
+    date: "2025-11-19"
+    partner: "Mohammed AlHawaj"
+    expense: "Land One Split Fees"
 
   # Insurance and license payments
   - amount: 9774.93
