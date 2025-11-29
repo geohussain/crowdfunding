@@ -4,13 +4,13 @@
 project:
   name: "Ghadeer Land"
   start_date: "2024-07-22"
-  end_date: "2025-07-22"
+  end_date: "2026-07-22"
 
 partners:
   - name: "Hussain AlSalim"
     investment_amount: 1000000
   - name: "Ali AlFaraj"
-    investment_amount: "500000.40 + 100000 + 25000 + 50000"
+    investment_amount: "500000.40 + 100000 + 25000 + 50000 + 10000"
   - name: "Saleh AlNasser"
     investment_amount: 440690
   - name: "Ali AlDawood"
@@ -162,6 +162,9 @@ expenses:
   - description: "Steel Wallet #3"
     date: "2025-10-30"
     amount: 50000
+  - description: "Plumbing Supplies Wallet #2"
+    amount: 10000
+    date: "2025-11-24"
 
   # Contracting payments
   - description: "Contracting Payment Fees #1"
@@ -400,6 +403,10 @@ payments:
   - expense: "Steel Wallet #3"
     date: "2025-10-30"
     amount: 50000
+    partner: "Ali AlFaraj"
+  - expense: "Plumbing Supplies Wallet #2"
+    amount: 10000
+    date: "2025-11-24"
     partner: "Ali AlFaraj"
 
   # Contracting payments
