@@ -10,7 +10,7 @@ partners:
   - name: "Hussain AlSalim"
     investment_amount: 1000000
   - name: "Ali AlFaraj"
-    investment_amount: "500000.40 + 100000 + 25000 + 50000 + 10000"
+    investment_amount: "500000.40 + 100000 + 25000 + 50000 + 10000 + 10000"
   - name: "Saleh AlNasser"
     investment_amount: 440690
   - name: "Ali AlDawood"
@@ -165,6 +165,9 @@ expenses:
   - description: "Plumbing Supplies Wallet #2"
     amount: 10000
     date: "2025-11-24"
+  - description: "Steel Wallet #4"
+    amount: 10000
+    date: "2025-12-03"
 
   # Contracting payments
   - description: "Contracting Payment Fees #1"
@@ -407,6 +410,10 @@ payments:
   - expense: "Plumbing Supplies Wallet #2"
     amount: 10000
     date: "2025-11-24"
+    partner: "Ali AlFaraj"
+  - expense: "Steel Wallet #4"
+    amount: 10000
+    date: "2025-12-03"
     partner: "Ali AlFaraj"
 
   # Contracting payments
