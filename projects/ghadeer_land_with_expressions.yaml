@@ -10,7 +10,8 @@ partners:
   - name: "Hussain AlSalim"
     investment_amount: 1000000
   - name: "Ali AlFaraj"
-    investment_amount: "500000.40 + 100000 + 25000 + 50000 + 10000 + 10000"
+    investment_amount: "500000.40 + 100000 + 25000 + 50000 + 10000 + 10000 +
+      30000 + 46222"
   - name: "Saleh AlNasser"
     investment_amount: 440690
   - name: "Ali AlDawood"
@@ -21,7 +22,7 @@ partners:
       20000 + 598 + 50000 + 50000 + 2196.50 + 20400 + 1727.88 + 20000
       + 8000 + 40636.50"
   - name: "Mohammed AlHawaj"
-    investment_amount: "120000 + 34030 + 329.50"
+    investment_amount: "120000 + 34030 + 329.50 + 400"
 
 expenses:
   # Initial land acquisition expenses
@@ -66,6 +67,9 @@ expenses:
   - description: "Land One Split Fees"
     amount: 329.50
     date: "2025-11-19"
+  - description: "Land One to Two Split Fees"
+    amount: 400
+    date: "2025-12-08"
 
   # Construction insurance and licenses
   - description: "Construction Insurance - Land One - Part One"
@@ -168,6 +172,9 @@ expenses:
   - description: "Steel Wallet #4"
     amount: 10000
     date: "2025-12-03"
+  - description: "Cementing Wallet #3"
+    amount: 30000
+    date: "2025-12-08"
 
   # Contracting payments
   - description: "Contracting Payment Fees #1"
@@ -188,6 +195,12 @@ expenses:
   - description: "Contracting Payment Fees #6"
     amount: 20000
     date: "2025-11-10"
+  - description: "Contracting Payment Fees #7"
+    amount: 25000
+    date: "2025-12-8"
+  - description: "Contracting Payment Fees #8"
+    amount: 20000
+    date: "2025-12-8"
 
   # Miscellaneous expenses
   - description: "Misc Fee #1"
@@ -281,6 +294,10 @@ payments:
     date: "2025-11-19"
     partner: "Mohammed AlHawaj"
     expense: "Land One Split Fees"
+  - amount: 400
+    date: "2025-12-08"
+    partner: "Mohammed AlHawaj"
+    expense: "Land One to Two Split Fees"
 
   # Insurance and license payments
   - amount: 9774.93
@@ -415,6 +432,10 @@ payments:
     amount: 10000
     date: "2025-12-03"
     partner: "Ali AlFaraj"
+  - expense: "Cementing Wallet #3"
+    amount: 30000
+    date: "2025-12-08"
+    partner: "Ali AlFaraj"
 
   # Contracting payments
   - amount: 20000
@@ -445,6 +466,14 @@ payments:
     date: "2025-11-10"
     partner: "Mohammed AlHawaj"
     expense: "Contracting Payment Fees #6"
+  - amount: 25000
+    date: "2025-12-08"
+    partner: "Ali AlFaraj"
+    expense: "Contracting Payment Fees #7"
+  - amount: 20000
+    date: "2025-12-08"
+    partner: "Ali AlFaraj"
+    expense: "Contracting Payment Fees #8"
 
   # Miscellaneous payments
   - amount: 500
@@ -467,3 +496,7 @@ payments:
     date: "2025-11-10"
     partner: "Mohammed AlHawaj"
     expense: "Misc Fee #5"
+  - amount: 1222
+    date: "2025-12-08"
+    partner: "Ali AlFaraj"
+    expense: "Misc Fee #6"
