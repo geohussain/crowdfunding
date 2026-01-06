@@ -11,7 +11,7 @@ partners:
     investment_amount: 1000000
   - name: "Ali AlFaraj"
     investment_amount: "500000.40 + 100000 + 25000 + 50000 + 10000 + 10000 +
-      30000 + 46222"
+      30000 + 46222 + 10000"
   - name: "Saleh AlNasser"
     investment_amount: 440690
   - name: "Ali AlDawood"
@@ -175,6 +175,9 @@ expenses:
   - description: "Cementing Wallet #3"
     amount: 30000
     date: "2025-12-08"
+  - description: "Steel Wallet #5"
+    amount: 10000
+    date: "2026-01-05"
 
   # Contracting payments
   - description: "Contracting Payment Fees #1"
@@ -435,6 +438,10 @@ payments:
   - expense: "Cementing Wallet #3"
     amount: 30000
     date: "2025-12-08"
+    partner: "Ali AlFaraj"
+  - expense: "Steel Wallet #5"
+    amount: 10000
+    date: "2026-01-05"
     partner: "Ali AlFaraj"
 
   # Contracting payments
