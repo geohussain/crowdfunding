@@ -11,7 +11,7 @@ partners:
     investment_amount: 1000000
   - name: "Ali AlFaraj"
     investment_amount: "500000.40 + 100000 + 25000 + 50000 + 10000 + 10000 +
-      30000 + 46222 + 10000"
+      30000 + 46222 + 10000 + 32023"
   - name: "Saleh AlNasser"
     investment_amount: 440690
   - name: "Ali AlDawood"
@@ -204,6 +204,9 @@ expenses:
   - description: "Contracting Payment Fees #8"
     amount: 20000
     date: "2025-12-8"
+  - description: "Contracting Payment Fees #9"
+    amount: 25000
+    date: "2026-01-12"
 
   # Miscellaneous expenses
   - description: "Misc Fee #1"
@@ -224,6 +227,9 @@ expenses:
   - description: "Misc Fee #6"
     amount: 1222
     date: "2025-11-15"
+  - description: "Misc Fee #7"
+    amount: 7023
+    date: "2026-01-12"
 
 payments:
   # Initial payments
@@ -481,6 +487,10 @@ payments:
     date: "2025-12-08"
     partner: "Ali AlFaraj"
     expense: "Contracting Payment Fees #8"
+  - amount: 25000
+    date: "2026-01-12"
+    partner: "Ali AlFaraj"
+    expense: "Contracting Payment Fees #9"
 
   # Miscellaneous payments
   - amount: 500
@@ -507,3 +517,7 @@ payments:
     date: "2025-12-08"
     partner: "Ali AlFaraj"
     expense: "Misc Fee #6"
+  - amount: 7023
+    date: "2026-01-12"
+    partner: "Ali AlFaraj"
+    expense: "Misc Fee #7"
