@@ -13,7 +13,7 @@ partners:
     investment_amount: "500000.40 + 100000 + 25000 + 50000 + 10000 + 10000 +
       30000 + 46222 + 10000 + 32023"
   - name: "Saleh AlNasser"
-    investment_amount: 440690
+    investment_amount: "440690 + 15000 + 557"
   - name: "Ali AlDawood"
     investment_amount: "205481 + 221.60 + 703 + 400 + 920 + 394 +
       9774.93 + 4715.88 + 330 + 8625 + 4286.35 + 6374 +
@@ -70,6 +70,9 @@ expenses:
   - description: "Land One to Two Split Fees"
     amount: 400
     date: "2025-12-08"
+  - description: "Land Two Building License Update Fees"
+    amount: 557
+    date: "2026-02-11"
 
   # Construction insurance and licenses
   - description: "Construction Insurance - Land One - Part One"
@@ -207,6 +210,9 @@ expenses:
   - description: "Contracting Payment Fees #9"
     amount: 25000
     date: "2026-01-12"
+  - description: "Contracting Payment Fees #10"
+    amount: 15000
+    date: "2026-01-29"
 
   # Miscellaneous expenses
   - description: "Misc Fee #1"
@@ -307,6 +313,10 @@ payments:
     date: "2025-12-08"
     partner: "Mohammed AlHawaj"
     expense: "Land One to Two Split Fees"
+  - amount: 557
+    date: "2026-02-11"
+    partner: "Saleh AlNasser"
+    expense: "Land Two Building License Update Fees"
 
   # Insurance and license payments
   - amount: 9774.93
@@ -491,6 +501,10 @@ payments:
     date: "2026-01-12"
     partner: "Ali AlFaraj"
     expense: "Contracting Payment Fees #9"
+  - amount: 15000
+    date: "2026-01-29"
+    partner: "Saleh AlNasser"
+    expense: "Contracting Payment Fees #10"
 
   # Miscellaneous payments
   - amount: 500
